@@ -6,7 +6,7 @@ gROOT.Macro( os.path.expanduser( '~/rootlogon.C' ) )
 
 def loadFWLite():
     gSystem.Load("libFWCoreFWLite")
-    gROOT.ProcessLine('FWLiteEnabler::enable();')
+    gROOT.ProcessLine('AutoLibraryLoader::enable();')
     gSystem.Load("libFWCoreFWLite")
 
 

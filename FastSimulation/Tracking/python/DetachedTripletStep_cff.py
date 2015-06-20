@@ -30,7 +30,7 @@ detachedTripletStepSeeds = FastSimulation.Tracking.TrajectorySeedProducer_cfi.tr
 # track candidates
 import FastSimulation.Tracking.TrackCandidateProducer_cfi
 detachedTripletStepTrackCandidates = FastSimulation.Tracking.TrackCandidateProducer_cfi.trackCandidateProducer.clone(
-    src = cms.InputTag("detachedTripletStepSeeds"),
+    SeedProducer = cms.InputTag("detachedTripletStepSeeds"),
     MinNumberOfCrossedLayers = 3
     )
 

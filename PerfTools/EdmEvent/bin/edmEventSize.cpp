@@ -14,7 +14,7 @@
 #include <TROOT.h>
 #include <TSystem.h>
 #include <TError.h>
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 
 static const char * const kHelpOpt = "help";
 static const char * const kHelpCommandOpt = "help,h";
@@ -88,7 +88,7 @@ int main( int argc, char * argv[] ) {
 
   if( vm.count( kAutoLoadOpt ) != 0 ) {
     gSystem->Load( "libFWCoreFWLite" );
-    FWLiteEnabler::enable();
+    AutoLibraryLoader::enable();
   }
   else 
     gErrorIgnoreLevel = kError; 

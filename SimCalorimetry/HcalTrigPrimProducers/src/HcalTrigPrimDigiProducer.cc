@@ -28,13 +28,11 @@ HcalTrigPrimDigiProducer::HcalTrigPrimDigiProducer(const edm::ParameterSet& ps)
 	  ps.getParameter<std::vector<double> >("weights"),
 	  ps.getParameter<int>("latency"),
 	  ps.getParameter<uint32_t>("FG_threshold"),
-          ps.getParameter<uint32_t>("ZS_threshold"),
+      ps.getParameter<uint32_t>("ZS_threshold"),
 	  ps.getParameter<int>("numberOfSamples"),
 	  ps.getParameter<int>("numberOfPresamples"),
-	  ps.getParameter<int>("numberOfSamplesHF"),
-	  ps.getParameter<int>("numberOfPresamplesHF"),
-	  ps.getParameter<uint32_t>("MinSignalThreshold"),
-	  ps.getParameter<uint32_t>("PMTNoiseThreshold")
+      ps.getParameter<uint32_t>("MinSignalThreshold"),
+      ps.getParameter<uint32_t>("PMTNoiseThreshold")
    ),
   inputLabel_(ps.getParameter<std::vector<edm::InputTag> >("inputLabel")),
   inputTagFEDRaw_(ps.getParameter<edm::InputTag> ("InputTagFEDRaw")),

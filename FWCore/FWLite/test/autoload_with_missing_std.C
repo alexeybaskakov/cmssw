@@ -7,7 +7,7 @@
 //}
 //cout <<"class not present yet"<<endl;
 gSystem->Load("libFWCoreFWLite");
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 if( !TClass::GetClass("vector<edmtest::Thing>") ) {
    exit(1);
 }

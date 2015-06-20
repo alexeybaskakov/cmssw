@@ -16,13 +16,12 @@
 class GEMCoPadDigi{
 
 public:
-  explicit GEMCoPadDigi(uint8_t roll, GEMPadDigi pad1, GEMPadDigi pad2);
+  explicit GEMCoPadDigi(GEMPadDigi pad1, GEMPadDigi pad2);
   GEMCoPadDigi();
 
   bool operator==(const GEMCoPadDigi& digi) const;
   bool operator!=(const GEMCoPadDigi& digi) const;
 
-  int roll() const {return roll_;}
   int pad(int l) const;
   int bx(int l) const;
 
@@ -32,7 +31,6 @@ public:
   void print() const;
 
 private:
-  uint8_t roll_;
   GEMPadDigi first_;
   GEMPadDigi second_;
 };

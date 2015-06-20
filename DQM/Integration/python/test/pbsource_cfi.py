@@ -26,6 +26,12 @@ options.register('skipFirstLumis',
 
 # Parameters for runType
 
+options.register('runtype',
+         'cosmic_run',
+        VarParsing.VarParsing.multiplicity.singleton,
+        VarParsing.VarParsing.varType.string,
+          "Type of Run in CMS")
+
 options.register ('runkey',
           'cosmic_run',
           VarParsing.VarParsing.multiplicity.singleton,
@@ -38,9 +44,9 @@ options.parseArguments()
 #if len(sys.argv) > 1:
 #  options.parseArguments()
 
-runType = RunType()
+runType = RunType(['pp_run','cosmic_run','hi_run','hpu_run'])
 if not options.runkey.strip():
-  options.runkey = 'pp_run'
+  options.runkey = 'cosmic_run'
 
 runType.setRunType(options.runkey.strip())
 

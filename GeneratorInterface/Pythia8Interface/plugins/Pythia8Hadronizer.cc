@@ -10,6 +10,7 @@
 
 #include "Pythia8/Pythia.h"
 #include "Pythia8Plugins/HepMC2.h"
+#include "GeneratorInterface/Pythia8Interface/plugins/HepMCA2.h"
 
 #include "GeneratorInterface/Pythia8Interface/interface/Py8InterfaceBase.h"
 
@@ -578,8 +579,9 @@ bool Pythia8Hadronizer::residualDecay()
 
   if(NPartsAfterDecays == NPartsBeforeDecays) return true;
 
+  HepMC::Pythia8ToHepMCA toHepMCA;
   bool result = true;
-
+ 
   for ( int ipart=NPartsAfterDecays; ipart>NPartsBeforeDecays; ipart-- )
   {
 
@@ -607,7 +609,7 @@ bool Pythia8Hadronizer::residualDecay()
 
       part->set_status(2);
 
-      result = toHepMC.fill_next_event( *(fDecayer.get()), event().get(), -1, true, part);
+      result = toHepMCA.append_event( fDecayer->event, event().get(), part);
 
     }
   }

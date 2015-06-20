@@ -12,7 +12,7 @@
 
 #include "DataFormats/FWLite/interface/Event.h"
 #include "DataFormats/Common/interface/Handle.h"
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 
 #include "DataFormats/MuonReco/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
@@ -29,14 +29,14 @@ int main(int argc, char* argv[])
   // ----------------------------------------------------------------------
   // First Part: 
   //
-  //  * enable FWLite 
+  //  * enable the AutoLibraryLoader 
   //  * book the histograms of interest 
   //  * open the input file
   // ----------------------------------------------------------------------
 
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 
   // initialize command line parser
   optutl::CommandLineParser parser ("Analyze FWLite Histograms");

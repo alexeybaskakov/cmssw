@@ -33,7 +33,7 @@ lowPtTripletStepSeeds = FastSimulation.Tracking.TrajectorySeedProducer_cfi.traje
 # track candidates
 import FastSimulation.Tracking.TrackCandidateProducer_cfi
 lowPtTripletStepTrackCandidates = FastSimulation.Tracking.TrackCandidateProducer_cfi.trackCandidateProducer.clone(
-    src = cms.InputTag("lowPtTripletStepSeeds"),
+    SeedProducer = cms.InputTag("lowPtTripletStepSeeds"),
     MinNumberOfCrossedLayers = 3
 )
 

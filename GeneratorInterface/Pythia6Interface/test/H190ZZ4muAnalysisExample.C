@@ -10,7 +10,7 @@
 // since it already in the rootlogon.C
 //
 //   gSystem->Load("libFWCoreFWLite") ;
-//   FWLiteEnabler::enable() ;
+//   AutoLibraryLoader::enable() ;
    
    TFile* f = new TFile("PythiaH190ZZ4mu_cfi_py_GEN.root") ;
    

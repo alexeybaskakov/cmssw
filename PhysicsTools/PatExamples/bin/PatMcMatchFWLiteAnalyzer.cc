@@ -13,7 +13,7 @@
 #include "DataFormats/FWLite/interface/Handle.h"
 #include "DataFormats/PatCandidates/interface/Muon.h" // Include the examined data formats
 #include "DataFormats/PatCandidates/interface/Jet.h"  // Include the examined data formats
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 
 
 int main(int argc, char* argv[]) 
@@ -21,14 +21,14 @@ int main(int argc, char* argv[])
   // ----------------------------------------------------------------------
   // First Part: 
   //
-  //  * enable FWLite 
+  //  * enable the AutoLibraryLoader 
   //  * book the histograms of interest 
   //  * open the input file
   // ----------------------------------------------------------------------
 
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
   
   // book a set of histograms
   TH2F* muonPt_  = new TH2F( "muonPt", "Muon Pt", 60, 0., 300., 60, 0., 300. ); // 2-D histo for muon Pt

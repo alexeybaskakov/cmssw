@@ -32,15 +32,15 @@ void
 RPCGeometryParsFromDD::build(const DDCompactView* cview, 
       const MuonDDDConstants& muonConstants, RecoIdealGeometry& rgeo )
 {
-  std::string attribute = "ReadOutName";
-  std::string value     = "MuonRPCHits";
+  std::string attribute = "ReadOutName"; // could come from .orcarc
+  std::string value     = "MuonRPCHits";    // could come from .orcarc
   DDValue val(attribute, value, 0.0);
 
   // Asking only for the MuonRPC's
   DDSpecificsFilter filter;
   filter.setCriteria(val, // name & value of a variable 
-		     DDCompOp::matches,
-		     DDLogOp::AND, 
+		     DDSpecificsFilter::matches,
+		     DDSpecificsFilter::AND, 
 		     true, // compare strings otherwise doubles
 		     true // use merged-specifics or simple-specifics
 		     );

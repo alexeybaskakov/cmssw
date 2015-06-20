@@ -6,7 +6,7 @@ process = cms.Process("Test")
 options = VarParsing.VarParsing("analysis")
 
 options.register ('globalTag',
-                  "DONOTEXIST",
+                  "DONOTEXIST::All",
                   VarParsing.VarParsing.multiplicity.singleton, # singleton or list
                   VarParsing.VarParsing.varType.string,          # string, int, or float
                   "GlobalTag")
@@ -72,9 +72,8 @@ process.SiStripDetInfoFileReader = cms.Service("SiStripDetInfoFileReader")
 
 
 # Conditions (Global Tag is used here):
-process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
-from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, options.globalTag, '')
+process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
+process.GlobalTag.globaltag = options.globalTag
 
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
 

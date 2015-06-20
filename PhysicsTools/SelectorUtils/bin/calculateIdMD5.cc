@@ -1,7 +1,7 @@
 #include <iostream>
 #include <TSystem.h>
 
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -16,7 +16,7 @@ int main ( int argc, char ** argv )
 
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 
   if ( argc < 3 ) {
     std::cout << "Usage : " << argv[0] 

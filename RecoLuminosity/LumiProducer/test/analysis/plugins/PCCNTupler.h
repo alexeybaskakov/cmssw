@@ -33,7 +33,7 @@
 #include "TObject.h"
 #include "TH1F.h"
 
-
+using namespace reco;
 
 class TObject;
 class TTree;
@@ -68,9 +68,6 @@ class PCCNTupler : public edm::one::EDAnalyzer<edm::one::SharedResources, edm::o
     void onlineRocColRow(const DetId &pID, int offlineRow, int offlineCol, int &roc, int &col, int &row);
     void isPixelTrack(const edm::Ref<std::vector<Trajectory> > &refTraj, bool &isBpixtrack, bool &isFpixtrack);
 
-    void Reset();
-    void SaveAndReset();
-    void ComputeMeanAndMeanError();;
 
   private:
     edm::EDGetTokenT<edmNew::DetSetVector<SiPixelCluster> >  pixelToken;
@@ -84,8 +81,6 @@ class PCCNTupler : public edm::one::EDAnalyzer<edm::one::SharedResources, edm::o
     edm::InputTag   fPrimaryVertexCollectionLabel;
     edm::InputTag   fPixelClusterLabel;
     edm::InputTag   fPileUpInfoLabel;
-  
-    static const int MAX_VERTICES=200;
 
     bool fAccessSimHitInfo;
 
@@ -107,14 +102,19 @@ class PCCNTupler : public edm::one::EDAnalyzer<edm::one::SharedResources, edm::o
     static const int DGPERCLMAX = 100;  
     static const int TKPERCLMAX = 100;  
 
+    // module information
+    int nDeadModules;
+    uint32_t  deadModules[6]; 
+    int nDeadPrint; 
+
     // saving events per LS, LN or event
     std::string saveType = "LumiSect"; // LumiSect or LumiNib or Event
-    std::string sampleType="MC"; // MC or DATA
     bool saveAndReset;
     bool sameEvent;
     bool sameLumiNib;
     bool sameLumiSect;
     bool firstEvent;
+    std::string sampleType="MC"; // MC or DATA
 
      // Lumi stuff
     TTree * tree;
@@ -123,42 +123,23 @@ class PCCNTupler : public edm::one::EDAnalyzer<edm::one::SharedResources, edm::o
     int LNNo=-99;    // set to indicate first pass of analyze method
     int eventNo=-99; // set to indicate first pass of analyze method
     int bxNo=-99;    // local variable only
-    int orbitNo=-99;
     
     std::pair<int,int> bxModKey;    // local variable only
    
     int eventCounter=0;
     int totalEvents;
     
-    bool includeVertexInformation;
-    bool includePixels;
-
-    int nPU;
-    int nVtx;
-    bool goodVertex[MAX_VERTICES];
-    int vtx_nTrk[MAX_VERTICES];
-    int vtx_ndof[MAX_VERTICES];
-    float vtx_x[MAX_VERTICES];
-    float vtx_y[MAX_VERTICES];
-    float vtx_z[MAX_VERTICES];
-    float vtx_chi2[MAX_VERTICES];
-    float vtx_normchi2[MAX_VERTICES];
-    bool vtx_isValid[MAX_VERTICES];
-    bool vtx_isFake[MAX_VERTICES];
-
+    bool includeVertexInformation, includePixels;
+    int nVtx, nTrk, ndof;
     std::map<int,int> nGoodVtx;
     std::map<std::pair<int,int>,int> nPixelClusters;
     std::map<std::pair<int,int>,int> nClusters;
     std::map<int,int> layers;
 
-    std::map<std::pair<int,int>,int> meanPixelClusters;
-    std::map<std::pair<int,int>,int> meanPixelClustersError;
-    
     TH1F* pileup;
 
-    UInt_t timeStamp_begin;
-    UInt_t timeStamp_local;
-    UInt_t timeStamp_end;
+    float xV, yV, zV, chi2;
+    UInt_t timeStamp;
     int nPrint;
     std::map<int,int> BXNo;
     edm::InputTag vertexTags_; //used to select what vertices to read from configuration file 

@@ -14,11 +14,10 @@ SiStripSpyEventMatcher = cms.EDFilter(
     SpyReorderedDigisTag = cms.InputTag('SiStripSpyDigiConverter','Reordered'),
     SpyVirginRawDigisTag = cms.InputTag('SiStripSpyDigiConverter','VirginRaw'),
     SpySource = cms.SecSource(
-      "EmbeddedRootSource",
+      "PoolSource",
       fileNames = cms.untracked.vstring(
         'SpyFileNameWhichNeedsToBeSet SiStripSpyEventMatcher.SpySource.fileNames'
-        ),
-        sequential = cms.bool.untracked(True),
+        )
       ),
     CounterDiffMaxAllowed = cms.uint32(100)
     )

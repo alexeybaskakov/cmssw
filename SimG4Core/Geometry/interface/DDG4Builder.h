@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
  
+struct DDPosData;
 class DDG4SolidConverter;
 class G4LogicalVolume;
 class G4VPhysicalVolume;

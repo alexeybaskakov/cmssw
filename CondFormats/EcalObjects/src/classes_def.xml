@@ -19,6 +19,10 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalChannelStatus"/>
+<!-- typedefs for EcalCondTowerObjectContainer -->
+<class name="EcalDCSTowerStatus"/>
 
 <!-- base class -->
 <class name="EcalDAQStatusCode"/>
@@ -30,6 +34,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondTowerObjectContainer -->
+<class name="EcalDAQTowerStatus"/>
 
 <!-- base class -->
 <class name="EcalDQMStatusCode"/>
@@ -48,6 +54,10 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalDQMChannelStatus"/>
+<!-- typedefs for EcalCondTowerObjectContainer -->
+<class name="EcalDQMTowerStatus"/>
 
 <!-- base class -->
 <class name="EcalMGPAGainRatio"/>
@@ -59,6 +69,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalGainRatios"/>
 
 <!-- base class -->
 <class name="EcalMappingElement"/>
@@ -70,6 +82,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalMappingElectronics"/>
 
 <!-- base class -->
 <class name="EcalPedestal"/>
@@ -81,6 +95,10 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalPedestals"/>
+
+
 
 <!-- base class -->
 <class name="EcalTPGCrystalStatusCode"/>
@@ -92,6 +110,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalTPGCrystalStatus"/>
 
 <!-- base class -->
 <class name="EcalTPGLinearizationConstant"/>
@@ -103,6 +123,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalTPGLinearizationConst"/>
 
 <!-- base class -->
 <class name="EcalTPGPedestal"/>
@@ -114,6 +136,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalTPGPedestals"/>
 
 <!-- base class -->
 <class name="EcalXtalGroupId"/>
@@ -125,6 +149,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalWeightXtalGroups"/>
 
 <!-- base class is the builtin type float -->
 <!-- templates for EcalCondObjectContainer having the class as template parameter, excluding STL -->
@@ -134,6 +160,16 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalFloatCondObjectContainer"/>
+<class name="EcalIntercalibConstants"/>
+<class name="EcalIntercalibConstantsMC"/>
+<class name="EcalIntercalibErrors"/>
+<class name="EcalLaserAPDPNRatiosRef"/>
+<class name="EcalLaserAlphas"/>
+<class name="EcalTimeCalibConstants"/>
+<class name="EcalTimeCalibErrors"/>
+
 
 <!-- base class -->
 <class name="EcalLaserAPDPNRatios::EcalLaserAPDPNpair"/>
@@ -150,6 +186,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalLaserAPDPNRatios::EcalLaserAPDPNRatiosMap"/>
 
 <!-- base class -->
 <class name="EcalTimeDependentCorrections::Values"/>
@@ -166,6 +204,12 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalTimeDependentCorrections::EcalValueMap"/>
+
+<!-- typedefs for EcalTimeDependentCorrections -->
+<class name="EcalLinearCorrections"/>
+
 
 <class name="EcalWeightSet"/>
 
@@ -181,6 +225,12 @@
 <class name="EcalTimeOffsetConstant"/>
 
 <class name="EcalFunParams"/>
+<!-- typedefs -->
+<class name="EcalClusterCrackCorrParameters"/>
+<class name="EcalClusterEnergyCorrectionObjectSpecificParameters"/>
+<class name="EcalClusterEnergyCorrectionParameters"/>
+<class name="EcalClusterEnergyUncertaintyParameters"/>
+<class name="EcalClusterLocalContCorrParameters"/>
 
 <class name="EcalDCUTemperatures"/>
 <class name="EcalPTMTemperatures"/>
@@ -250,6 +300,8 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalPulseShapes"/>
 
 <!-- base class -->
 <class name="EcalPulseCovariance"/>
@@ -261,5 +313,7 @@
    <field name = "eb_" mapping = "blob"/>
    <field name = "ee_" mapping = "blob"/>
 </class>
+<!-- typedefs for EcalCondObjectContainer -->
+<class name="EcalPulseCovariances"/>
 
 </lcgdict>

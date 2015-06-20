@@ -4,10 +4,6 @@ import shutil
 import sys
 import time
 
-# as we need to load the shared lib from here, make sure it's in our path:
-if os.path.join( os.environ['CMSSW_BASE'], 'src') not in sys.path:
-   sys.path.append( os.path.join( os.environ['CMSSW_BASE'], 'src') )
-
 # -------------------------------------------------------------------------------------------------------
 
 payload2xmlCodeTemplate = """
@@ -111,20 +107,14 @@ class CondXmlProcessor(object):
     def __init__(self, condDBIn):
     	self.conddb = condDBIn
     	self._pl2xml_isPrepared = False
-
-	if not os.path.exists( os.path.join( os.environ['CMSSW_BASE'], 'src') ):
-	   raise Exception("Looks like you are not running in a CMSSW developer area, $CMSSW_BASE/src/ does not exist")
-
-	self.fakePkgName = "fakeSubSys4pl/fakePkg4pl"
-	self._pl2xml_tmpDir = os.path.join( os.environ['CMSSW_BASE'], 'src', self.fakePkgName )
-
+	self._pl2xml_tmpDir = "fakeSubSys4pl/fakePkg4pl"
 	self.doCleanup = True
 
     def __del__(self):
 
     	if self.doCleanup: 
-           shutil.rmtree( '/'.join( self._pl2xml_tmpDir.split('/')[:-1] ) )
-           os.unlink( os.path.join( os.environ['CMSSW_BASE'], 'src', './pl2xmlComp.so') )
+ 	   shutil.rmtree( self._pl2xml_tmpDir.split('/')[0] )
+           os.unlink('./pl2xmlComp.so')
         return 
 
     def prepPayload2xml(self, session, payload):
@@ -142,7 +132,8 @@ class CondXmlProcessor(object):
         code = payload2xmlCodeTemplate % info
     
         tmpDir = self._pl2xml_tmpDir
-        if ( os.path.exists( tmpDir ) ) :
+        if ( os.path.exists( tmpDir.split('/')[0] ) or
+ 	     os.path.exists( tmpDir ) ) :
            msg = '\nERROR: %s already exists, please remove if you did not create that manually !!' % tmpDir
            self.doCleanup = False
 	   raise Exception(msg)
@@ -159,10 +150,8 @@ class CondXmlProcessor(object):
         	 codeFile.write(code)
     	 	 codeFile.close()
     
-	libDir = os.path.join( os.environ["CMSSW_BASE"], 'tmp', os.environ["SCRAM_ARCH"], 'src', self.fakePkgName, 'src', self.fakePkgName.replace('/',''))
-	libName = libDir + '/lib%s.so' % self.fakePkgName.replace('/','') 
     	cmd = "source /afs/cern.ch/cms/cmsset_default.sh;"
-    	cmd += "(cd %s ; scram b 2>&1 >build.log && cp %s $CMSSW_BASE/src/pl2xmlComp.so )" % (tmpDir, libName)
+    	cmd += "(cd %s ; scram b 2>&1 >build.log && cp %s/tmp/%s/src/%s/src/%s/lib%s.so ../../pl2xmlComp.so )" % (tmpDir, os.environ["CMSSW_BASE"], os.environ["SCRAM_ARCH"], tmpDir, tmpDir.replace('/',''), tmpDir.replace('/','') ) 
     	ret = os.system(cmd)
 	if ret != 0 : self.doCleanup = False
 
@@ -185,6 +174,6 @@ class CondXmlProcessor(object):
     
         sys.path.append('.')
         import pl2xmlComp
-        resultXML = pl2xmlComp.payload2xml( str(data), str(plType) )
+        resultXML = pl2xmlComp.payload2xml( data, plType )
         print resultXML    
     

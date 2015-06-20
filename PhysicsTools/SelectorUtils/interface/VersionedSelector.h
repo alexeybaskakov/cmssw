@@ -11,21 +11,7 @@
   \author Lindsey Gray
 */
 
-#if ( !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__) ) || defined(__ROOTCLING__)
 
-#define REGULAR_CPLUSPLUS 1
-#define CINT_GUARD(CODE) CODE
-#include "FWCore/Framework/interface/ConsumesCollector.h"
-#include <memory>
-#define SHARED_PTR(T) std::shared_ptr<T>
-
-#else
-
-#define CINT_GUARD(CODE)
-#include <boost/shared_ptr.hpp>
-#define SHARED_PTR(T) boost::shared_ptr<T>
-
-#endif
 
 #include "PhysicsTools/SelectorUtils/interface/Selector.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -33,8 +19,14 @@
 #include "PhysicsTools/SelectorUtils/interface/CutApplicatorBase.h"
 #include "PhysicsTools/SelectorUtils/interface/CutApplicatorWithEventContentBase.h"
 
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
+#include "FWCore/Framework/interface/ConsumesCollector.h"
+#endif
+
 // because we need to be able to validate the ID
 #include <openssl/md5.h>
+
+#include <boost/shared_ptr.hpp>
 
 namespace candf = candidate_functions;
 
@@ -54,7 +46,7 @@ class VersionedSelector : public Selector<T> {
     if ( tracked != untracked ) {
       throw cms::Exception("InvalidConfiguration")
 	<< "VersionedSelector does not allow untracked parameters"
-	<< " in the cutflow ParameterSet!";
+	<< " in the configuration ParameterSet!";
     }
     // now setup the md5 and cute accessor functions
     MD5((unsigned char*)tracked.c_str(), tracked.size(), id_md5_);
@@ -67,9 +59,12 @@ class VersionedSelector : public Selector<T> {
     this->retInternal_  = this->getBitTemplate();
   }
   
-  virtual bool operator()( const T& ref, pat::strbitset& ret ) CINT_GUARD(override final) {
+  bool operator()( const T& ref, pat::strbitset& ret ) 
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
+    override final
+#endif
+  {
     howfar_ = 0;
-    bitmap_ = 0;
     bool failed = false;
     if( !initialized_ ) {
       throw cms::Exception("CutNotInitialized")
@@ -80,7 +75,6 @@ class VersionedSelector : public Selector<T> {
       const bool result = (*cuts_[i])(temp);
       if( result || this->ignoreCut(cut_indices_[i]) ) {
 	this->passCut(ret,cut_indices_[i]);
-        bitmap_ |= 1<<i;
 	if( !failed ) ++howfar_;
       } else {
 	failed = true;
@@ -90,35 +84,26 @@ class VersionedSelector : public Selector<T> {
     return (bool)ret;
   }
   
-  virtual bool operator()(const T& ref, edm::EventBase const& e, pat::strbitset& ret) CINT_GUARD(override final) {
+  bool operator()(const T& ref, edm::EventBase const& e, pat::strbitset& ret) 
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
+    override final
+#endif
+  {
     // setup isolation needs
     for( size_t i = 0, cutssize = cuts_.size(); i < cutssize; ++i ) {
       if( needs_event_content_[i] ) {
 	CutApplicatorWithEventContentBase* needsEvent = 
 	  static_cast<CutApplicatorWithEventContentBase*>(cuts_[i].get());
-	needsEvent->getEventContent(e); 
+	needsEvent->getEventContent(e);      
       }
     }
     return this->operator()(ref, ret);
   }
   
-  //repeat the other operator() we left out here
-  //in the base class here so they are exposed to ROOT
+#ifndef __ROOTCLING__
+  using Selector<T>::operator();
+#endif
   
-  virtual bool operator()( T const & t ) CINT_GUARD(override final) {
-    this->retInternal_.set(false);
-    this->operator()(t, this->retInternal_);
-    this->setIgnored(this->retInternal_);
-    return (bool)this->retInternal_;
-  }
-  
-  virtual bool operator()( T const & t, edm::EventBase const & e) CINT_GUARD(override final) {
-    this->retInternal_.set(false);
-    this->operator()(t, e, this->retInternal_);
-    this->setIgnored(this->retInternal_);
-    return (bool)this->retInternal_;
-  }
-
   const unsigned char* md55Raw() const { return id_md5_; } 
   bool operator==(const VersionedSelector& other) const {
     constexpr unsigned length = MD5_DIGEST_LENGTH;
@@ -129,21 +114,21 @@ class VersionedSelector : public Selector<T> {
   const std::string& name() const { return name_; }
 
   const unsigned howFarInCutFlow() const { return howfar_; }
-  
-  const unsigned bitMap() const { return bitmap_; }
 
   const size_t cutFlowSize() const { return cuts_.size(); } 
 
   void initialize(const edm::ParameterSet&);
 
-  CINT_GUARD(void setConsumes(edm::ConsumesCollector));
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
+  void setConsumes(edm::ConsumesCollector);
+#endif
 
  protected:
   bool initialized_;
-  std::vector<SHARED_PTR(candf::CandidateCut) > cuts_;
+  std::vector<boost::shared_ptr<candf::CandidateCut> > cuts_;
   std::vector<bool> needs_event_content_;
   std::vector<typename Selector<T>::index_type> cut_indices_;
-  unsigned howfar_, bitmap_;
+  unsigned howfar_;
 
  private:  
   unsigned char id_md5_[MD5_DIGEST_LENGTH];
@@ -165,68 +150,50 @@ initialize( const edm::ParameterSet& conf ) {
       << "You have supplied a null/empty cutflow to VersionedIDSelector,"
       << " please add content to the cuflow and try again.";
   }
-  
   // this lets us keep track of cuts without knowing what they are :D
   std::vector<edm::ParameterSet>::const_iterator cbegin(cutflow.begin()),
     cend(cutflow.end());
   std::vector<edm::ParameterSet>::const_iterator icut = cbegin;
-  std::map<std::string,unsigned> cut_counter;
-  for( ; icut != cend; ++icut ) {  
-    std::stringstream realname;    
+  for( ; icut != cend; ++icut ) {   
     const std::string& name = icut->getParameter<std::string>("cutName");
-    if( !cut_counter.count(name) ) cut_counter[name] = 0;      
-    realname << name << "_" << cut_counter[name];
     const bool needsContent = 
       icut->getParameter<bool>("needsAdditionalProducts");     
     const bool ignored = icut->getParameter<bool>("isIgnored");
-    candf::CandidateCut* plugin = nullptr;
-    CINT_GUARD(plugin = CutApplicatorFactory::get()->create(name,*icut));
+    candf::CandidateCut* plugin = 
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
+      CutApplicatorFactory::get()->create(name,*icut);
+#else
+      nullptr;
+#endif
     if( plugin != nullptr ) {
-      cuts_.push_back(SHARED_PTR(candf::CandidateCut)(plugin));
+      cuts_.push_back(boost::shared_ptr<candf::CandidateCut>(plugin));
     } else {
       throw cms::Exception("BadPluginName")
 	<< "The requested cut: " << name << " is not available!";
     }
     needs_event_content_.push_back(needsContent);
-    const std::string therealname = realname.str();
-    this->push_back(therealname);
-    this->set(therealname);
-    if(ignored) this->ignoreCut(therealname);
-    cut_counter[name]++;
+    this->push_back(name);
+    this->set(name);
+    if(ignored) this->ignoreCut(name);
   }    
-
   //have to loop again to set cut indices after all are filled
   icut = cbegin;
-  cut_counter.clear();
   for( ; icut != cend; ++icut ) {
-    std::stringstream realname;
-    const std::string& name = icut->getParameter<std::string>("cutName");    
-    if( !cut_counter.count(name) ) cut_counter[name] = 0;      
-    realname << name << "_" << cut_counter[name];
-    cut_indices_.push_back(typename Selector<T>::index_type(&(this->bits_),realname.str()));    
-    cut_counter[name]++;
+    const std::string& name = icut->getParameter<std::string>("cutName");
+    cut_indices_.push_back(typename Selector<T>::index_type(&(this->bits_),name));
   }
-  
   initialized_ = true;
 }
 
-#ifdef REGULAR_CPLUSPLUS
+#if !defined(__CINT__) && !defined(__MAKECINT__) && !defined(__REFLEX__)
 #include "PhysicsTools/SelectorUtils/interface/CutApplicatorWithEventContentBase.h"
 template<class T>
 void VersionedSelector<T>::setConsumes(edm::ConsumesCollector cc) {
   for( size_t i = 0, cutssize = cuts_.size(); i < cutssize; ++i ) {
     if( needs_event_content_[i] ) {
       CutApplicatorWithEventContentBase* needsEvent = 
-	dynamic_cast<CutApplicatorWithEventContentBase*>(cuts_[i].get());
-      if( nullptr != needsEvent ) {
-        needsEvent->setConsumes(cc);
-      } else {
-        throw cms::Exception("InvalidCutConfiguration")
-          << "Cut: " << ((CutApplicatorBase*)cuts_[i].get())->name() 
-          << " configured to consume event products but does not "
-          << " inherit from CutApplicatorWithEventContenBase "
-          << " please correct either your python or C++!";
-      }
+	static_cast<CutApplicatorWithEventContentBase*>(cuts_[i].get());
+      needsEvent->setConsumes(cc);
     }
   }
 }

@@ -122,7 +122,7 @@ class BetterConfigParser(ConfigParser.ConfigParser):
             if "compare:" in section:
                 self.checkInput(section,
                                 knownSimpleOptions = ["levels", "dbOutput",
-                                                      "jobmode", "3DSubdetector1", "3Dubdetector2", "3DTranslationalScaleFactor"])
+                                                      "jobmode"])
                 levels = self.get( section, "levels" )
                 dbOutput = self.get( section, "dbOutput" )
                 compares[section.split(":")[1]] = ( levels, dbOutput )

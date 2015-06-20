@@ -14,7 +14,7 @@ DummyPhysics::DummyPhysics(G4LogicalVolumeToDDLogicalPartMap& map,
   if (emPhys) 
     RegisterPhysics(new DummyEMPhysics("dummyEM"));
   edm::LogInfo("PhysicsList") << "DummyPhysics constructed with EM Physics "
-			      << emPhys << " and Decay";
+			      << emPhys << "\n";
 }
 
 DummyPhysics::~DummyPhysics() {}

@@ -1,7 +1,7 @@
 {
 cout << "Loading FWLite..." << endl;
 gSystem->Load("libFWCoreFWLite");
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 
 cout << "Redefining colors..." << endl;
 

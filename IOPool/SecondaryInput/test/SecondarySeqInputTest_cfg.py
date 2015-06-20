@@ -12,9 +12,8 @@ process.source = cms.Source("PoolSource",
 )
 
 process.Thing = cms.EDProducer("SecondaryProducer",
-    seq = cms.untracked.bool(True),
-    input = cms.SecSource("EmbeddedRootSource",
-        sequential = cms.untracked.bool(True),
+    sequential = cms.untracked.bool(True),
+    input = cms.SecSource("PoolSource",
         skipEvents = cms.untracked.uint32(5),
         fileNames = cms.untracked.vstring('file:SecondaryInputTest2.root')
     )

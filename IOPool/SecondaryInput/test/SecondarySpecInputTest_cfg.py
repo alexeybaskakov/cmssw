@@ -13,7 +13,7 @@ process.source = cms.Source("PoolSource",
 
 process.Thing = cms.EDProducer("SecondaryProducer",
     specified = cms.untracked.bool(True),
-    input = cms.SecSource("EmbeddedRootSource",
+    input = cms.SecSource("PoolSource",
         fileNames = cms.untracked.vstring('file:SecondaryInputTest2.root')
     )
 )

@@ -10,7 +10,7 @@ fi
 cat <<EOF >| /tmp/cmsbrowse_tmp.C
 {
       gSystem->Load("$CMSSW_RELEASE_BASE/lib/$SCRAM_ARCH/libFWCoreFWLite.so");
-      FWLiteEnabler::enable();
+      AutoLibraryLoader::enable();
       hfile = new TFile("${file}","READONLY");
       new TBrowser("CMS Browser",hfile);
 }

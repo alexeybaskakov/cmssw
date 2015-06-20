@@ -138,8 +138,8 @@ void CocoaAnalyzer::ReadXMLFile( const edm::EventSetup& evts )
 	  // get all parts labelled with COCOA using a SpecPar
   DDSpecificsFilter filter;
   filter.setCriteria(val,  // name & value of a variable 
-		     DDCompOp::matches,
-		     DDLogOp::AND, 
+		     DDSpecificsFilter::matches,
+		     DDSpecificsFilter::AND, 
 		     true, // compare strings otherwise doubles
 		     true  // use merged-specifics or simple-specifics
 		     );

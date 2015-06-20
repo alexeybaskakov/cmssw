@@ -28,15 +28,8 @@ class GeometryComparison(GenericValidation):
                                generated to create unique path names for the
                                individual validation instances.
         """
-	defaults = {
-	    "3DSubdetector1":"1",
-	    "3DSubdetector2":"2",
-	    "3DTranslationalScaleFactor":"50"
-            }
         mandatories = ["levels", "dbOutput"]
-        GenericValidation.__init__(self, valName, alignment, config, 
-				   "compare", addDefaults=defaults, 
-				   addMandatories = mandatories)
+        GenericValidation.__init__(self, valName, alignment, config, "compare", addMandatories = mandatories)
         if not randomWorkdirPart == None:
             self.randomWorkdirPart = randomWorkdirPart
         self.referenceAlignment = referenceAlignment
@@ -67,9 +60,7 @@ class GeometryComparison(GenericValidation):
                                  "ROOTGeometry.root"),
             "referenceGeometry": "IDEAL", # will be replaced later
                                           #  if not compared to IDEAL
-            "reference": referenceName,
-            "referenceTitle": self.referenceAlignment.title,
-	    "alignmentTitle": self.alignmentToValidate.title
+            "reference": referenceName
             })
         if not referenceName == "IDEAL":
             repMap["referenceGeometry"] = (".oO[reference]Oo."
@@ -127,10 +118,39 @@ class GeometryComparison(GenericValidation):
                      "/scripts/GeometryComparisonPlotter.cc .\n"
                      "root -b -q 'comparisonScript.C+(\""
                      ".oO[name]Oo..Comparison_common"+name+".root\",\""
-                     "./\")'\n"
-		     "rfcp "+path+"/TkAl3DVisualization_.oO[name]Oo..C .\n"
-		     "root -l -b -q TkAl3DVisualization_.oO[name]Oo..C+\n")
+                     "./\")'\n")
                 if  self.copyImages:
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("rfmkdir -p .oO[datadir]Oo./.oO[name]Oo."
+                        #~ ".Comparison_common"+name+"_Images\n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*PXB*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*PXF*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*TIB*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*TID*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*TEC*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*TOB*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
+                   #~ repMap["runComparisonScripts"] += \
+                       #~ ("find . -maxdepth 1 -name \"*tracker*\" "
+                        #~ "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        #~ "/.oO[name]Oo..Comparison_common"+name+"_Images/\" \n")
                    repMap["runComparisonScripts"] += \
                        ("rfmkdir -p .oO[datadir]Oo./.oO[name]Oo."
                         ".Comparison_common"+name+"_Images\n")
@@ -143,38 +163,162 @@ class GeometryComparison(GenericValidation):
                    repMap["runComparisonScripts"] += \
                        ("rfmkdir -p .oO[datadir]Oo./.oO[name]Oo."
                         ".Comparison_common"+name+"_Images/CrossTalk\n")
-
-
-                   ### At the moment translations are immages with suffix _1 and _2, rotations _3 and _4, and cross talk _5 and _6
-                   ### The numeration depends on the order of the MakePlots(x, y) commands in comparisonScript.C
-                   ### If comparisonScript.C is changed, check if the following lines need to be changed as well
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_1*\" "
+                       ("find . -maxdepth 1 -name \"*phi_vs_dr*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_2*\" "
+                       ("find . -maxdepth 1 -name \"*phi_vs_dx*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
-                   
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_3*\" "
+                       ("find . -maxdepth 1 -name \"*phi_vs_dy*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*phi_vs_dz*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*phi_vs_rdphi*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*r_vs_dr*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*r_vs_dx*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*r_vs_dy*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*r_vs_dz*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*r_vs_rdphi*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*z_vs_dr*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*z_vs_dx*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*z_vs_dy*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*z_vs_dz*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*z_vs_rdphi*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Translations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*alpha_vs_dalpha*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_4*\" "
+                       ("find . -maxdepth 1 -name \"*alpha_vs_dbeta*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
-                   
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_5*\" "
+                       ("find . -maxdepth 1 -name \"*alpha_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*beta_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*beta_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*beta_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*gamma_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*gamma_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*gamma_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/Rotations/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dr_vs_dalpha*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
                    repMap["runComparisonScripts"] += \
-                       ("find . -maxdepth 1 -name \"*_6*\" "
+                       ("find . -maxdepth 1 -name \"*dr_vs_dbeta*\" "
                         "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
                         "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
-                   
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dr_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dx_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dx_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dx_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dy_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dy_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dy_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dz_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dz_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*dz_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*rdphi_vs_dalpha*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*rdphi_vs_dbeta*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
+                   repMap["runComparisonScripts"] += \
+                       ("find . -maxdepth 1 -name \"*rdphi_vs_dgamma*\" "
+                        "-print | xargs -I {} bash -c \"rfcp {} .oO[datadir]Oo."
+                        "/.oO[name]Oo..Comparison_common"+name+"_Images/CrossTalk/\" \n")
                    repMap["runComparisonScripts"] += \
                        ("find . -maxdepth 1 -name "
                         "\"TkMap_SurfDeform*.pdf\" -print | xargs -I {} bash -c"
@@ -210,11 +354,6 @@ class GeometryComparison(GenericValidation):
                         "-maxdepth 1 -name \"*.png\" -print | xargs -I {} bash "
                         "-c \"rfcp {} .oO[datadir]Oo./.oO[name]Oo."
                         ".Comparison_common"+name+"_Images/ArrowPlots\"\n")
-		   repMap["runComparisonScripts"] += \
-                       ("find . "
-                        "-maxdepth 1 -name \".oO[name]Oo..Visualization_rotated.gif\" -print | xargs -I {} bash "
-                        "-c \"rfcp {} .oO[datadir]Oo./.oO[name]Oo."
-                        ".Comparison_common"+name+"_Images/.oO[name]Oo..Visualization.gif\"\n")
 
                 resultingFile = replaceByMap(("/store/caf/user/$USER/.oO[eosdir]Oo./compared%s_"
                                               ".oO[name]Oo..root"%name), repMap)
@@ -240,9 +379,7 @@ class GeometryComparison(GenericValidation):
                                  )
 
         #~ print configTemplates.scriptTemplate
-        scripts = {scriptName: replaceByMap( configTemplates.scriptTemplate, repMap )}
-	files = {replaceByMap("TkAl3DVisualization_.oO[name]Oo..C", repMap ): replaceByMap(configTemplates.visualizationTrackerTemplate, repMap )}
-	self.createFiles(files, path)
+        scripts = {scriptName: replaceByMap( configTemplates.scriptTemplate, repMap ) }
         return GenericValidation.createScript(self, scripts, path)
 
     def createCrabCfg(self, path):

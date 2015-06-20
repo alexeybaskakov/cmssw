@@ -60,15 +60,6 @@ MuIsoDepositProducer::MuIsoDepositProducer(const ParameterSet& par) :
     if (theDepositNames[i] != "") alias += "_" + theDepositNames[i];
     produces<reco::IsoDepositMap>(theDepositNames[i]).setBranchAlias(alias);
   }
-
-  if (!theExtractor) {
-    edm::ParameterSet extractorPSet = theConfig.getParameter<edm::ParameterSet>("ExtractorPSet");
-    std::string extractorName = extractorPSet.getParameter<std::string>("ComponentName");
-    theExtractor = IsoDepositExtractorFactory::get()->create( extractorName, extractorPSet, consumesCollector());
-    LogDebug(metname)<<" Load extractor..."<<extractorName;
-  }
-
-
 }
 
 //! destructor
@@ -83,6 +74,14 @@ void MuIsoDepositProducer::produce(Event& event, const EventSetup& eventSetup){
 
   LogDebug(metname)<<" Muon Deposit producing..."
 		   <<" BEGINING OF EVENT " <<"================================";
+
+  if (!theExtractor) {
+    edm::ParameterSet extractorPSet = theConfig.getParameter<edm::ParameterSet>("ExtractorPSet");
+    std::string extractorName = extractorPSet.getParameter<std::string>("ComponentName");
+    theExtractor = IsoDepositExtractorFactory::get()->create( extractorName, extractorPSet, consumesCollector());
+    LogDebug(metname)<<" Load extractor..."<<extractorName;
+  }
+
 
   unsigned int nDeps = theMultipleDepositsFlag ? theDepositNames.size() : 1;
 

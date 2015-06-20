@@ -167,13 +167,9 @@ for dataclassfunc in sorted(dataclassfuncs):
 			if n : o = n.group(3)
 			else : o = m.group(1)
 			p = re.sub("class ","",o)
-			q = re.sub("struct ","",p)
-			dataclass = re.sub("\<.*\> ","",q)
+			dataclass = re.sub("struct ","",p)
 			for flaggedclass in sorted(flaggedclasses):
-				exact= r"^" + re.escape(flaggedclass) + r"$"
-				exactmatch=re.match(exact,dataclass)
-				if exactmatch:
-				if re.match(flaggedclass,dataclass):
+				if re.match(flaggedclass,dataclass) :
 					print "Flagged event setup data class '"+dataclass+"' is accessed in call stack '",
 					path = nx.shortest_path(G,tfunc,dataclassfunc)
 					for p in path:

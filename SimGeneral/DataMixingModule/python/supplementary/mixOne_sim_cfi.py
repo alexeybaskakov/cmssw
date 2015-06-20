@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 mix = cms.EDFilter("DataMixingModule",
-    input = cms.SecSource("EmbeddedRootSource",
+    input = cms.SecSource("PoolRASource",
         nbPileupEvents = cms.PSet(
             averageNumber = cms.double(1.0)
         ),

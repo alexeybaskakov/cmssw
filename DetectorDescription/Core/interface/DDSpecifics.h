@@ -1,6 +1,7 @@
 #ifndef DDSpecifics_h
 #define DDSpecifics_h
 
+
 #include <map>
 #include <string>
 #include <vector>
@@ -9,6 +10,8 @@
 #include "DetectorDescription/Core/interface/DDBase.h"
 #include "DetectorDescription/Core/interface/DDsvalues.h"
 #include "DetectorDescription/Core/interface/DDExpandedView.h"
+
+//#include "DetectorDescription/Core/interface/DDExpandedView.h"
 
 class DDSpecifics;
 class DDPartSelection;
@@ -61,9 +64,9 @@ public:
       bla, bla, bla
   */
   DDSpecifics(const DDName & name,
-              const std::vector<std::string> & partSelections,
-	      const DDsvalues_type & svalues,
-	      bool doRegex=true);
+              const selectors_type & partSelections,
+	       const DDsvalues_type & svalues,
+	       bool doRegex=true);
   
   ~DDSpecifics();
   
@@ -73,8 +76,13 @@ public:
   //! Reference to the user-data attached to all nodes selected by the selections-strings given through selection
   const DDsvalues_type & specifics() const;
   
+  //! Calculates all expanded-nodes which are selected by the selection-strings
+  bool nodes(DDNodes & nds) const;
+  
   //! Calculates the geometrical history of a fully specified PartSelector
   std::pair<bool,DDExpandedView> node() const;
+  
+/*   static void clear(); */
 };
 
 #endif

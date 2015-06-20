@@ -20,6 +20,7 @@
 #include "FWCore/ServiceRegistry/interface/StreamContext.h"
 #include "FWCore/ParameterSet/interface/ConfigurationDescriptions.h"
 #include "FWCore/ParameterSet/interface/ParameterSetDescription.h"
+#include "FWCore/Utilities/interface/do_nothing_deleter.h"
 #include "FWCore/Utilities/interface/GlobalIdentifier.h"
 #include "FWCore/Utilities/interface/TimeOfDay.h"
 
@@ -42,6 +43,10 @@ namespace edm {
           if(count % 100 - lastDigit == 10) return th;
           return (lastDigit == 1 ? st : (lastDigit == 2 ? nd : rd));
         }
+        template <typename T>
+        std::shared_ptr<T> createSharedPtrToStatic(T* ptr) {
+          return std::shared_ptr<T>(ptr, do_nothing_deleter());
+        }
   }
 
   InputSource::InputSource(ParameterSet const& pset, InputSourceDescription const& desc) :
@@ -55,11 +60,12 @@ namespace edm {
       maxSecondsUntilRampdown_(desc.maxSecondsUntilRampdown_),
       processingMode_(RunsLumisAndEvents),
       moduleDescription_(desc.moduleDescription_),
-      productRegistry_(desc.productRegistry_),
+      productRegistry_(createSharedPtrToStatic<ProductRegistry>(desc.productRegistry_)),
       processHistoryRegistry_(new ProcessHistoryRegistry),
       branchIDListHelper_(desc.branchIDListHelper_),
       thinnedAssociationsHelper_(desc.thinnedAssociationsHelper_),
-      processGUID_(createGlobalIdentifier()),
+      primary_(pset.getParameter<std::string>("@module_label") == std::string("@main_input")),
+      processGUID_(primary_ ? createGlobalIdentifier() : std::string()),
       time_(),
       newRun_(true),
       newLumi_(true),
@@ -78,8 +84,12 @@ namespace edm {
     }
     if (maxSecondsUntilRampdown_ > 0) {
       processingStart_ = std::chrono::steady_clock::now();
-    }
+  }
 
+    // Secondary input sources currently do not have a product registry.
+    if(primary_) {
+      assert(desc.productRegistry_ != 0);
+    }
     std::string const defaultMode("RunsLumisAndEvents");
     std::string const runMode("Runs");
     std::string const runLumiMode("RunsAndLumis");

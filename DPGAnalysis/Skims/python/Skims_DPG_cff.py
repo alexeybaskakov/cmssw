@@ -363,7 +363,9 @@ SKIMStreamWElectron = cms.FilteredStream(
 #####################
 
 from DPGAnalysis.Skims.ZElectronSkim_cff import *
-ZElectronPathGsf = cms.Path( zdiElectronSequence )
+#ZElectronPathPhoton = cms.Path( tagPhotonSeq )
+#ZElectronPathTrack = cms.Path( tagTrackSeq )
+ZElectronPathGsf = cms.Path( tagGsfSeq )
 SKIMStreamZElectron = cms.FilteredStream(
     responsible = 'ECAL DPG',
     name = 'ZElectron',

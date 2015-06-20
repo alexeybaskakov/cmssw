@@ -9,7 +9,7 @@
   gSystem->Load("libDataFormatsSiPixelDetId.so");
   gSystem->Load("libDataFormatsSiStripDetId.so");
   gSystem->Load("libFWCoreFWLite.so");
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 
   gStyle->SetCanvasBorderMode(0);
   gStyle->SetPadBorderMode(0);

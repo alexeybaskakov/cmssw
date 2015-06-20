@@ -46,6 +46,7 @@ HadronicProcessHelper::HadronicProcessHelper(const std::string & fileName){
 	{
 	  prod.push_back(m_particleTable->FindParticle(part)->GetPDGEncoding());
 	} else {
+	  G4cout<<"Particle: "<<part<<" is unknown."<<G4endl;
 	  G4Exception("HadronicProcessHelper", "UnkownParticle", FatalException,
 		      "Initialization: The reaction product list contained an unknown particle");
 	}
@@ -63,10 +64,14 @@ HadronicProcessHelper::HadronicProcessHelper(const std::string & fileName){
 
   processListStream.close();
 
+
   m_checkFraction = 0;
   m_n22 = 0;
   m_n23 = 0;
+
+
 }
+
 
 G4bool HadronicProcessHelper::applicabilityTester(const G4ParticleDefinition& aPart){
   const G4ParticleDefinition* aP = &aPart; 

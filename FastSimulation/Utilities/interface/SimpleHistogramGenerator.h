@@ -34,16 +34,16 @@ class SimpleHistogramGenerator
   double generate(RandomEngineAndDistribution const*) const;
 
   int binarySearch(const int& n, 
-		   const std::vector<float>& array, 
+		   const std::vector<double>& array, 
 		   const double& value) const;
 
  private:
 
   /// Pointer to the histogram
-  //TH1 * myHisto;
+  TH1 * myHisto;
 
    /// the axis
-  //TAxis * theXaxis;
+  TAxis * theXaxis;
 
   /// Number of bins
   int nBins;
@@ -55,7 +55,7 @@ class SimpleHistogramGenerator
   double binWidth;
 
   /// Integral
-  std::vector<float> integral;
+  std::vector<double> integral;
 
   /// Number of entries
   double nEntries;

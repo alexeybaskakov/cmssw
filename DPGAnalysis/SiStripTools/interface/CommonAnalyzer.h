@@ -29,7 +29,6 @@ class CommonAnalyzer {
   const std::string& getPrefix() const;
 
   const std::vector<unsigned int> getRunList() const;
-  const std::vector<unsigned int> getFillList() const;
 
   TObject* getObject(const char* name) const;
   TNamed* getObjectWithSuffix(const char* name, const char* suffix="") const;
@@ -38,7 +37,6 @@ class CommonAnalyzer {
 
  private:
 
-  const std::vector<unsigned int> getList(const char* what) const;
 
   TFile* _file;
   std::string _runnumber;

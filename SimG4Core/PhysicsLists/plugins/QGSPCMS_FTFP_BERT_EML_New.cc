@@ -28,12 +28,11 @@ QGSPCMS_FTFP_BERT_EML_New::QGSPCMS_FTFP_BERT_EML_New(G4LogicalVolumeToDDLogicalP
   bool emPhys  = p.getUntrackedParameter<bool>("EMPhysics",true);
   bool hadPhys = p.getUntrackedParameter<bool>("HadPhysics",true);
   bool tracking= p.getParameter<bool>("TrackingCut");
-  double timeLimit = p.getParameter<double>("MaxTrackTime")*ns;
+  bool munucl  = p.getParameter<bool>("FlagMuNucl");
   edm::LogInfo("PhysicsList") << "You are using the simulation engine: "
-			      << "QGSP_FTFP_BERT_EML_New \n Flags for EM Physics "
+			      << "QGSP_FTFP_BERT_EML_New with Flags for EM Physics "
 			      << emPhys << ", for Hadronic Physics "
-			      << hadPhys << " and tracking cut " << tracking
-			      << "   t(ns)= " << timeLimit/ns;
+			      << hadPhys << " and tracking cut " << tracking;
 
   if (emPhys) {
     // EM Physics
@@ -42,6 +41,7 @@ QGSPCMS_FTFP_BERT_EML_New::QGSPCMS_FTFP_BERT_EML_New(G4LogicalVolumeToDDLogicalP
 
     // Synchroton Radiation & GN Physics
     G4EmExtraPhysics* gn = new G4EmExtraPhysics(ver);
+    if(munucl) { G4String yes = "on"; gn->MuonNuclear(yes); }
     RegisterPhysics(gn);
   }
 
@@ -65,9 +65,7 @@ QGSPCMS_FTFP_BERT_EML_New::QGSPCMS_FTFP_BERT_EML_New(G4LogicalVolumeToDDLogicalP
 
     // Neutron tracking cut
     if (tracking) {
-      G4NeutronTrackingCut* ncut= new G4NeutronTrackingCut(ver);
-      ncut->SetTimeLimit(timeLimit);
-      RegisterPhysics(ncut);
+      RegisterPhysics( new G4NeutronTrackingCut(ver));
     }
   }
 

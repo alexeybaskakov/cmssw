@@ -17,8 +17,6 @@ unsortedOfflinePrimaryVertices=offlinePrimaryVertices.clone()
 offlinePrimaryVertices=sortedPrimaryVertices.clone(vertices="unsortedOfflinePrimaryVertices", particles="trackRefsForJetsBeforeSorting")
 offlinePrimaryVerticesWithBS=sortedPrimaryVertices.clone(vertices=cms.InputTag("unsortedOfflinePrimaryVertices","WithBS"), particles="trackRefsForJetsBeforeSorting")
 trackWithVertexRefSelectorBeforeSorting = trackWithVertexRefSelector.clone(vertexTag="unsortedOfflinePrimaryVertices")
-trackWithVertexRefSelectorBeforeSorting.ptMax=9e99
-trackWithVertexRefSelectorBeforeSorting.ptErrorCut=9e99
 trackRefsForJetsBeforeSorting = trackRefsForJets.clone(src="trackWithVertexRefSelectorBeforeSorting")
 
 

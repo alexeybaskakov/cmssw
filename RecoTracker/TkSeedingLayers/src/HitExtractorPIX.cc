@@ -1,6 +1,5 @@
 #include "HitExtractorPIX.h"
-#include "DataFormats/TrackerCommon/interface/TrackerTopology.h"
-#include "Geometry/Records/interface/TrackerTopologyRcd.h"
+#include "Geometry/TrackerGeometryBuilder/interface/TrackerLayerIdAccessor.h"
 #include "TrackingTools/DetLayers/interface/DetLayer.h"
 
 #include "DataFormats/Common/interface/Handle.h"
@@ -25,17 +24,13 @@ void HitExtractorPIX::useSkipClusters_(const edm::InputTag & m, edm::ConsumesCol
 HitExtractor::Hits HitExtractorPIX::hits(const TkTransientTrackingRecHitBuilder &ttrhBuilder, const edm::Event& ev, const edm::EventSetup& es) const
 {
   HitExtractor::Hits result;
-
-  edm::ESHandle<TrackerTopology> httopo;
-  es.get<TrackerTopologyRcd>().get(httopo);
-  const TrackerTopology& ttopo = *httopo;
-
+  TrackerLayerIdAccessor accessor;
   edm::Handle<SiPixelRecHitCollection> pixelHits;
   ev.getByToken( theHitProducer, pixelHits);
   if (theSide==SeedingLayer::Barrel) {
-    range2SeedingHits( *pixelHits, result, ttopo.pxbDetIdLayerComparator(theIdLayer));
+    range2SeedingHits( *pixelHits, result, accessor.pixelBarrelLayer(theIdLayer));
   } else {
-    range2SeedingHits( *pixelHits, result, ttopo.pxfDetIdDiskComparator(theSide,theIdLayer));
+    range2SeedingHits( *pixelHits, result, accessor.pixelForwardDisk(theSide,theIdLayer));
   }
 
 

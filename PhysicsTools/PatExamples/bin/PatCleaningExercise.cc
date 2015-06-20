@@ -10,7 +10,7 @@
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/PatCandidates/interface/Jet.h"
 #include "FWCore/ParameterSet/interface/ProcessDesc.h"
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "PhysicsTools/FWLite/interface/TFileService.h"
 #include "FWCore/PythonParameterSet/interface/PythonProcessDesc.h"
 
@@ -24,14 +24,14 @@ int main(int argc, char *argv[]){
   // ----------------------------------------------------------------------
   // First Part: 
   //
-  //  * enable FWLite 
+  //  * enable the AutoLibraryLoader 
   //  * book the histograms of interest 
   //  * open the input file
   // ----------------------------------------------------------------------
 
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 
   // only allow one argument for this simple example which should be the
   // the python cfg file

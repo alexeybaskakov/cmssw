@@ -27,7 +27,6 @@ from HLTriggerOffline.Exotica.analyses.hltExoticaHT_cff                import HT
 from HLTriggerOffline.Exotica.analyses.hltExoticaJetNoBptx_cff         import JetNoBptxPSet
 from HLTriggerOffline.Exotica.analyses.hltExoticaMuonNoBptx_cff        import MuonNoBptxPSet
 from HLTriggerOffline.Exotica.analyses.hltExoticaDisplacedMuEG_cff     import DisplacedMuEGPSet
-from HLTriggerOffline.Exotica.analyses.hltExoticaDisplacedMuJet_cff    import DisplacedMuJetPSet
 from HLTriggerOffline.Exotica.analyses.hltExoticaDisplacedDimuon_cff   import DisplacedDimuonPSet
 from HLTriggerOffline.Exotica.analyses.hltExoticaDisplacedL2Dimuon_cff import DisplacedL2DimuonPSet
 from HLTriggerOffline.Exotica.analyses.hltExoticaPureMET_cff           import PureMETPSet
@@ -64,7 +63,6 @@ hltExoticaValidator = cms.EDAnalyzer(
         "MuonNoBptx",
         "HT",
         "DisplacedMuEG",
-        "DisplacedMuJet",
         "DisplacedDimuon",
         "DisplacedL2Dimuon",
         "PureMET",
@@ -212,7 +210,6 @@ hltExoticaValidator = cms.EDAnalyzer(
     JetNoBptx        = JetNoBptxPSet,
     MuonNoBptx       = MuonNoBptxPSet,
     DisplacedMuEG    = DisplacedMuEGPSet,
-    DisplacedMuJet   = DisplacedMuJetPSet,
     DisplacedDimuon  = DisplacedDimuonPSet,
     DisplacedL2Dimuon = DisplacedL2DimuonPSet,
     PureMET          = PureMETPSet,                                 

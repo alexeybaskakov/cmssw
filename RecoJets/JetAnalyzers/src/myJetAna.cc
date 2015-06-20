@@ -1004,7 +1004,7 @@ void myJetAna::analyze( const edm::Event& evt, const edm::EventSetup& es ) {
   // **************************
   // ***  Pass Vertex
   // **************************
-  double VTX = 0.;
+  double VTX;
   int nVTX;
 
   edm::Handle<reco::VertexCollection> vertexCollection;

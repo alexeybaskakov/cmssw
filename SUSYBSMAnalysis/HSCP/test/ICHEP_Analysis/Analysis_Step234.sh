@@ -4,7 +4,7 @@ root -l -b << EOF
   TString dummy = makeshared.ReplaceAll("-Wshadow ", "");
   gSystem->SetMakeSharedLib(makeshared);
   gSystem->Load("libFWCoreFWLite");
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
   gSystem->Load("libDataFormatsFWLite.so");
   gSystem->Load("libAnalysisDataFormatsSUSYBSMObjects.so");
   gSystem->Load("libDataFormatsVertexReco.so");

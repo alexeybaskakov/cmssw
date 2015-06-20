@@ -11,6 +11,8 @@ class DDStrVector;
 //! output operator for printing ...
 std::ostream & operator<<(std::ostream & o, const DDStrVector & cons);
 
+//typedef std::vector<double> dd_constant_type;
+
 //! a named constant corresponding to the DDL-XML tag <Constant> and <ConstantsStrVector>
 class DDStrVector : public DDBase<DDName, std::vector<std::string>* >
 {
@@ -18,6 +20,9 @@ public:
 
    //! size type for the size of the stored values
    typedef std::vector<std::string>::size_type size_t;
+   
+   //! iterator for read-only acces to stored values
+   //typedef std::vector<std::string>::const_iterator const_iterator;
    
    //! value type of the managed object
    typedef std::vector<std::string> value_type;

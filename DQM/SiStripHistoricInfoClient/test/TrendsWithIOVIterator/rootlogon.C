@@ -14,5 +14,5 @@ gSystem->Load("libFWCoreFWLite");
 gSystem->Load("libtestSiStripHistoricDQM"); 
 gSystem->Load("libCondFormatsSiStripObjects"); 
 
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 }

@@ -1,7 +1,7 @@
 {
 cout << "Loading FWLite..." << endl;    // load CMSSW libraries
 gSystem->Load("libFWCoreFWLite");
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 
 cout << "Setting Style to Plain..." << endl;
 gROOT->SetStyle("Plain");        // Switches off the ROOT default style

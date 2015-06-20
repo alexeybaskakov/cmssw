@@ -11,7 +11,7 @@
 #include <TFile.h>
 #include <TSystem.h>
 
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "MuonAnalysis/MomentumScaleCalibration/interface/RootTreeHandler.h"
 
 /**
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
   
   // MuonPairVector pairVector;
   std::vector<MuonPair> pairVector;

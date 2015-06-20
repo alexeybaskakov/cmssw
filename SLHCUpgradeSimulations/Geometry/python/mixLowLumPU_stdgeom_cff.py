@@ -42,7 +42,7 @@ mix = cms.EDProducer("MixingModule",
     playback = cms.untracked.bool(False),
     useCurrentProcessOnly = cms.bool(False),
 
-    input = cms.SecSource("EmbeddedRootSource",
+    input = cms.SecSource("PoolSource",
     nbPileupEvents = cms.PSet(
             sigmaInel = cms.double(80.0),
             Lumi = cms.double(19.7)

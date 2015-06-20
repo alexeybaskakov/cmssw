@@ -6,13 +6,13 @@ import TrackingTools.GsfTracking.GsfElectronFit_cfi
 # from  FastSimulation.Configuration.StandardSequences_cff import famosGsfTrackSequence
 
 hltEgammaCkfTrackCandidatesForGSF = electronGSGsfTrackCandidates.clone()
-hltEgammaCkfTrackCandidatesForGSF.src = "hltEgammaElectronPixelSeeds"
+hltEgammaCkfTrackCandidatesForGSF.SeedProducer = "hltEgammaElectronPixelSeeds"
 hltEgammaGsfTracks = TrackingTools.GsfTracking.GsfElectronFit_cfi.GsfGlobalElectronTest.clone()
 hltEgammaGsfTracks.src = 'hltEgammaCkfTrackCandidatesForGSF'
 hltEgammaGsfTracks.TTRHBuilder = 'WithoutRefit'
 hltEgammaGsfTracks.TrajectoryInEvent = True
 
 hltEgammaCkfTrackCandidatesForGSFUnseeded = electronGSGsfTrackCandidates.clone()
-hltEgammaCkfTrackCandidatesForGSFUnseeded.src = "hltEgammaElectronPixelSeedsUnseeded"
+hltEgammaCkfTrackCandidatesForGSFUnseeded.SeedProducer = "hltEgammaElectronPixelSeedsUnseeded"
 hltEgammaGsfTracksUnseeded = hltEgammaGsfTracks.clone()
 hltEgammaGsfTracksUnseeded.src =  'hltEgammaCkfTrackCandidatesForGSFUnseeded'

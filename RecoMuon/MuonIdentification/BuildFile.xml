@@ -35,7 +35,6 @@
 <use   name="RecoMuon/TrackingTools"/>
 <use   name="DataFormats/CSCRecHit"/>
 <use   name="RecoLocalCalo/HcalRecAlgos"/>
-<use   name="PhysicsTools/SelectorUtils"/>
 <export>
   <lib   name="1"/>
 </export>

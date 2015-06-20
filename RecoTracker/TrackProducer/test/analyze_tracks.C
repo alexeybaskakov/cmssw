@@ -1,6 +1,6 @@
 {
 gSystem->Load("libFWCoreFWLite.so");
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 /////////SET THESE VALUES///////////////
 TFile file("TracksParTest2.root");
 TTree * tree = (TTree *) gROOT->FindObject("Events");

@@ -28,7 +28,7 @@ mix = cms.EDProducer("MixingModule",
     playback = cms.untracked.bool(False),
     useCurrentProcessOnly = cms.bool(False),
 
-    input = cms.SecSource("EmbeddedRootSource",
+    input = cms.SecSource("PoolSource",
         type = cms.string('readDB'),
 	sequential = cms.untracked.bool(False),                          
         fileNames = FileNames 
