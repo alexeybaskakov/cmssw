@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName   = 'Track_optimization_test_2'
+config.General.requestName   = 'Track_optimization_test_3'
 config.General.transferLogs = True
 
 config.section_("JobType")
@@ -27,5 +27,5 @@ config.Data.publishDataName = ''
 config.section_("Site")
 # Where the output files will be transmitted to
 config.Site.storageSite='T2_RU_JINR'
-config.Site.whitelist=['T2_RU_JINR','T2_IT_Pisa', 'T2_US_Caltech', 'T2_DE_DESY', 'T1_US_FNAL']
+#config.Site.whitelist=['T2_RU_JINR','T2_IT_Pisa', 'T2_US_Caltech', 'T2_DE_DESY', 'T1_US_FNAL']
 
