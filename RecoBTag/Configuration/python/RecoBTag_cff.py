@@ -79,6 +79,45 @@ pfBTagging = cms.Sequence(
     )
 )
 
+# new candidate-based fwk, with PF inputs
+pfBTagging_noHits_test = cms.Sequence(
+    (
+      # impact parameters and IP-only algorithms
+      noHitsPfImpactParameterTagInfos *
+      ( noHitsPfTrackCountingHighEffBJetTags +
+        pfTrackCountingHighPurBJetTags +
+        pfJetProbabilityBJetTags +
+        pfJetBProbabilityBJetTags +
+
+        # SV tag infos depending on IP tag infos, and SV (+IP) based algos
+        pfSecondaryVertexTagInfos *
+        ( pfSimpleSecondaryVertexHighEffBJetTags +
+          pfSimpleSecondaryVertexHighPurBJetTags +
+          pfCombinedSecondaryVertexBJetTags +
+          pfCombinedSecondaryVertexV2BJetTags
+        )
+        + inclusiveCandidateVertexing *
+        pfInclusiveSecondaryVertexFinderTagInfos *
+        pfCombinedInclusiveSecondaryVertexV2BJetTags
+
+      ) +
+
+      # soft lepton tag infos and algos
+      softPFMuonsTagInfos *
+      softPFMuonBJetTags
+      + softPFElectronsTagInfos *
+      softPFElectronBJetTags
+    ) *
+
+    # overall combined taggers
+    ( #CSV + soft-lepton + jet probability discriminators combined
+      pfCombinedMVABJetTags
+
+      #CSV + soft-lepton variables combined (btagger)
+      + pfCombinedSecondaryVertexSoftLeptonBJetTags   
+    )
+)
+
 # new candidate-based ctagging sequence, requires its own IVF vertices (relaxed IVF reconstruction cuts) 
 # but IP and soft-lepton taginfos from btagging sequence can be recycled
 pfCTagging = cms.Sequence(
@@ -92,5 +131,6 @@ pfCTagging = cms.Sequence(
 
 btagging = cms.Sequence(
     legacyBTagging +
-    pfBTagging #* pfCTagging
+    #pfBTagging #* pfCTagging 
+	pfBTagging_noHits_test
 )
