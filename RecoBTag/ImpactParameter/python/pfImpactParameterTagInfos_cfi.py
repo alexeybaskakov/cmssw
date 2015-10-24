@@ -19,3 +19,7 @@ pfImpactParameterTagInfos = cms.EDProducer("CandIPProducer",
     candidates = cms.InputTag("particleFlow"),
     maxDeltaR = cms.double(0.4)
 )
+noHitsPfImpactParameterTagInfos = pfImpactParameterTagInfos.clone(
+    minimumNumberOfPixelHits = cms.int32(0),
+    minimumNumberOfHits = cms.int32(0),
+)
