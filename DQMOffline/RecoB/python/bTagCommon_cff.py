@@ -40,6 +40,12 @@ bTagCommonBlock = cms.PSet(
     JECsource = cms.string("ak5PFCHSL1FastL2L3"),
     #tagger configuration
     tagConfig = cms.VPSet(
+	     cms.PSet(
+            bTagTrackIPAnalysisBlock,
+            type = cms.string('noHits_test'),
+            label = cms.InputTag("noHitsPfImpactParameterTagInfos"),
+            folder = cms.string("noHits_folder_test")
+        ),
         cms.PSet(
             bTagTrackIPAnalysisBlock,
             type = cms.string('CandIP'),
