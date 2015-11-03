@@ -40,12 +40,6 @@ bTagCommonBlock = cms.PSet(
     JECsource = cms.string("ak5PFCHSL1FastL2L3"),
     #tagger configuration
     tagConfig = cms.VPSet(
-	     cms.PSet(
-            bTagTrackIPAnalysisBlock,
-            type = cms.string('noHits_test'),
-            label = cms.InputTag("noHitsPfImpactParameterTagInfos"),
-            folder = cms.string("noHits_folder_test")
-        ),
         cms.PSet(
             bTagTrackIPAnalysisBlock,
             type = cms.string('CandIP'),
@@ -115,6 +109,18 @@ bTagCommonBlock = cms.PSet(
             bTagSoftLeptonAnalysisBlock,
             label = cms.InputTag("softPFElectronBJetTags"),
             folder = cms.string("SET")
+        ),
+			     cms.PSet(
+            bTagTrackIPAnalysisBlock,
+            type = cms.string('CandIP'),
+            label = cms.InputTag("pfTrackCountingHighEffBJetTagsNoHits"),
+            folder = cms.string("TCHE_noHits")
+        ),
+			cms.PSet(
+            bTagTrackIPAnalysisBlock,
+            type = cms.string('CandIP'),
+            label = cms.InputTag("pfTrackCountingHighPurBJetTagsNoHits"),
+            folder = cms.string("TCHP_noHits")
         ),
     )    
 )

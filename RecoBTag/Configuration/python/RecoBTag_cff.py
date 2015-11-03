@@ -79,13 +79,13 @@ pfBTagging = cms.Sequence(
     )
 )
 
-# new candidate-based fwk, with PF inputs
+# pfBTagging copy with "noHits" update
 pfBTagging_noHits_test = cms.Sequence(
     (
       # impact parameters and IP-only algorithms
-      noHitsPfImpactParameterTagInfos *
-      ( noHitsPfTrackCountingHighEffBJetTags +
-        pfTrackCountingHighPurBJetTags +
+      pfImpactParameterTagInfosNoHits *
+      ( pfTrackCountingHighEffBJetTagsNoHits +
+        pfTrackCountingHighPurBJetTagsNoHits +
         pfJetProbabilityBJetTags +
         pfJetBProbabilityBJetTags +
 
