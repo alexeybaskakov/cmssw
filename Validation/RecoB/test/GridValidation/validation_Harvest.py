@@ -15,17 +15,23 @@ process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.load("DQMServices.Core.DQM_cfg")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(1)
 )
 process.source = cms.Source("DQMRootSource",
     fileNames = cms.untracked.vstring()
 )
 
 process.load("Validation.RecoB.bTagAnalysis_harvesting_cfi")
+
+#loading configuration from  trackOptimisation_cfi.py file
+from Validation.RecoB.trackOptimisation_cfi import *
+process.bTagValidationHarvest.tagConfig = tags
+process.bTagValidationHarvest.flavPlots = flavPlots
+
 if runOnMC:
-    process.dqmSeq = cms.Sequence(process.bTagValidationHarvest * process.dqmSaver)
+	process.dqmSeq = cms.Sequence(process.bTagValidationHarvest * process.dqmSaver)
 else:
-    process.dqmSeq = cms.Sequence(process.bTagValidationHarvestData * process.dqmSaver)
+	process.dqmSeq = cms.Sequence(process.bTagValidationHarvestData * process.dqmSaver)
 
 process.plots = cms.Path(process.dqmSeq)
 

@@ -45,6 +45,7 @@ if not "ak4PFJetsCHS" in whichJets:
     process.patJetGenJetMatch.src                 = newjetID
 
 #process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging_noHits_test)
+#process.btagging = cms.Sequence(process.pfBTagging_noHits_test)
 process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging)
 process.btagSequence = cms.Sequence(
     process.ak4JetTracksAssociatorAtVertexPF *
