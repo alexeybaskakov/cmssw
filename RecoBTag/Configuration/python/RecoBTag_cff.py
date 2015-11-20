@@ -7,6 +7,9 @@ from RecoBTag.SecondaryVertex.secondaryVertex_cff import *
 from RecoBTau.JetTagComputer.combinedMVA_cff import *
 from RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff import *
 
+#loading configuration from  trackOptimisation_cfi.py file
+from Validation.RecoB.trackOptimisation_cfi import *
+
 legacyBTagging = cms.Sequence(
     (
       # impact parameters and IP-only algorithms
@@ -79,15 +82,31 @@ pfBTagging = cms.Sequence(
     )
 )
 
+# new candidate-based ctagging sequence, requires its own IVF vertices (relaxed IVF reconstruction cuts) 
+# but IP and soft-lepton taginfos from btagging sequence can be recycled
+pfCTagging = cms.Sequence(
+    ( inclusiveCandidateVertexingCtagL *
+      pfInclusiveSecondaryVertexFinderCtagLTagInfos
+    ) *
+
+    # CSV + soft-lepton variables combined (ctagger optimized for c vs dusg)
+    pfCombinedSecondaryVertexSoftLeptonCtagLJetTags
+)
+
+btagging = cms.Sequence(
+    legacyBTagging +
+    pfBTagging #* pfCTagging 
+)
+
 # pfBTagging copy with "noHits" update
-pfBTagging_noHits_test = cms.Sequence(
+pfBTagging_noHits = cms.Sequence(
     (
       # impact parameters and IP-only algorithms
       pfImpactParameterTagInfosNoHits *
       ( pfTrackCountingHighEffBJetTagsNoHits +
         pfTrackCountingHighPurBJetTagsNoHits +
-        pfJetProbabilityBJetTags +
-        pfJetBProbabilityBJetTags +
+        pfJetProbabilityBJetTagsNoHits +
+        pfJetBProbabilityBJetTagsNoHits +
 
         # SV tag infos depending on IP tag infos, and SV (+IP) based algos
         pfSecondaryVertexTagInfos *
@@ -118,19 +137,3 @@ pfBTagging_noHits_test = cms.Sequence(
     )
 )
 
-# new candidate-based ctagging sequence, requires its own IVF vertices (relaxed IVF reconstruction cuts) 
-# but IP and soft-lepton taginfos from btagging sequence can be recycled
-pfCTagging = cms.Sequence(
-    ( inclusiveCandidateVertexingCtagL *
-      pfInclusiveSecondaryVertexFinderCtagLTagInfos
-    ) *
-
-    # CSV + soft-lepton variables combined (ctagger optimized for c vs dusg)
-    pfCombinedSecondaryVertexSoftLeptonCtagLJetTags
-)
-
-btagging = cms.Sequence(
-    legacyBTagging +
-    #pfBTagging #* pfCTagging 
-	pfBTagging_noHits_test
-)

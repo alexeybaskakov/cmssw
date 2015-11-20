@@ -44,7 +44,8 @@ process.dqmSaver.saveAtJobEnd =cms.untracked.bool(True)
 process.dqmSaver.forceRunNumber = cms.untracked.int32(1)
 
 process.DQMRootSource.fileNames = [
-'file:/afs/cern.ch/work/b/baskakov/public/b-tagging/TrackSelection/CMSSW_7_4_11/src/Validation/RecoB/test/GridValidation/crab_Track_optimization_noHits_test_9/results/MEtoEDMConverter_1.root',
-'file:/afs/cern.ch/work/b/baskakov/public/b-tagging/TrackSelection/CMSSW_7_4_11/src/Validation/RecoB/test/GridValidation/crab_Track_optimization_noHits_test_9/results/MEtoEDMConverter_2.root'
+'file:/afs/cern.ch/work/b/baskakov/public/b-tagging/TrackSelection/CMSSW_7_4_11/src/Validation/RecoB/test/GridValidation/crab_Track_optimization_noHits_test_19/results/MEtoEDMConverter_1.root',
+'file:/afs/cern.ch/work/b/baskakov/public/b-tagging/TrackSelection/CMSSW_7_4_11/src/Validation/RecoB/test/GridValidation/crab_Track_optimization_noHits_test_19/results/MEtoEDMConverter_2.root',
+'file:/afs/cern.ch/work/b/baskakov/public/b-tagging/TrackSelection/CMSSW_7_4_11/src/Validation/RecoB/test/GridValidation/crab_Track_optimization_noHits_test_19/results/MEtoEDMConverter_3.root'
 ]
 

@@ -110,18 +110,6 @@ bTagCommonBlock = cms.PSet(
             label = cms.InputTag("softPFElectronBJetTags"),
             folder = cms.string("SET")
         ),
-			     cms.PSet(
-            bTagTrackIPAnalysisBlock,
-            type = cms.string('CandIP'),
-            label = cms.InputTag("pfTrackCountingHighEffBJetTagsNoHits"),
-            folder = cms.string("TCHE_noHits")
-        ),
-			cms.PSet(
-            bTagTrackIPAnalysisBlock,
-            type = cms.string('CandIP'),
-            label = cms.InputTag("pfTrackCountingHighPurBJetTagsNoHits"),
-            folder = cms.string("TCHP_noHits")
-        ),
     )    
 )
 

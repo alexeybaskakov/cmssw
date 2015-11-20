@@ -23,6 +23,9 @@ print "is it MC ? : ", runOnMC, ", Flavours:", flavPlots
 print "Global Tag : ", tag
 ############
 
+#loading configuration from  trackOptimisation_cfi.py file
+from Validation.RecoB.trackOptimisation_cfi import *
+
 process = cms.Process("validation")
 process.load("DQMServices.Components.DQMEnvironment_cfi")
 process.load("DQMServices.Core.DQM_cfg")
@@ -44,12 +47,12 @@ if not "ak4PFJetsCHS" in whichJets:
     process.softPFElectronsTagInfos.jets          = newjetID
     process.patJetGenJetMatch.src                 = newjetID
 
-#process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging_noHits_test)
-#process.btagging = cms.Sequence(process.pfBTagging_noHits_test)
-process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging)
+	
+#process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging)
+process.btagging_noHits = cms.Sequence(process.pfBTagging_noHits)
 process.btagSequence = cms.Sequence(
     process.ak4JetTracksAssociatorAtVertexPF *
-    process.btagging
+    process.btagging_noHits
     )
 process.jetSequences = cms.Sequence(process.goodOfflinePrimaryVertices * process.btagSequence)
 
@@ -57,12 +60,14 @@ process.jetSequences = cms.Sequence(process.goodOfflinePrimaryVertices * process
 print "inputTag : ", process.ak4JetTracksAssociatorAtVertexPF.jets
 ###
 
+
 process.load("Validation.RecoB.bTagAnalysis_firststep_cfi")
 if runOnMC:
     process.flavourSeq = cms.Sequence(
         process.selectedHadronsAndPartons *
         process.ak4JetFlavourInfos
         )
+    process.bTagValidationFirstStep.tagConfig = tags	
     process.bTagValidationFirstStep.jetMCSrc = 'ak4JetFlavourInfos'
     process.bTagValidationFirstStep.applyPtHatWeight = False
     process.bTagValidationFirstStep.doJetID = True
@@ -88,6 +93,12 @@ else:
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10)
 )
+
+### Should help to avoid 8001 error 
+process.options = cms.untracked.PSet(
+SkipEvent = cms.untracked.vstring('ProductNotFound')
+)
+
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring()
 )
