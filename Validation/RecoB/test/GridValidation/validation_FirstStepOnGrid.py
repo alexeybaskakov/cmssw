@@ -24,7 +24,7 @@ print "Global Tag : ", tag
 ############
 
 #loading configuration from  trackOptimisation_cfi.py file
-from Validation.RecoB.trackOptimisation_cfi import *
+from Validation.RecoB.trackOptimisation_cfi import tags, flavPlots
 
 process = cms.Process("validation")
 process.load("DQMServices.Components.DQMEnvironment_cfi")
@@ -38,6 +38,8 @@ process.load("PhysicsTools.JetMCAlgos.HadronAndPartonSelector_cfi")
 process.load("PhysicsTools.JetMCAlgos.AK4PFJetsMCFlavourInfos_cfi")
 process.load("PhysicsTools.JetMCAlgos.CaloJetsMCFlavour_cfi")
 
+process.load("Validation.RecoB.trackOptimisation_cfi")
+
 newjetID=cms.InputTag(whichJets)
 process.ak4JetFlavourInfos.jets = newjetID
 if not "ak4PFJetsCHS" in whichJets:
@@ -49,10 +51,10 @@ if not "ak4PFJetsCHS" in whichJets:
 
 	
 #process.btagging = cms.Sequence(process.legacyBTagging + process.pfBTagging)
-process.btagging_noHits = cms.Sequence(process.pfBTagging_noHits)
 process.btagSequence = cms.Sequence(
     process.ak4JetTracksAssociatorAtVertexPF *
-    process.btagging_noHits
+    process.pfBTagging * 
+    process.pfBTagging_noHits
     )
 process.jetSequences = cms.Sequence(process.goodOfflinePrimaryVertices * process.btagSequence)
 
@@ -95,9 +97,9 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 ### Should help to avoid 8001 error 
-process.options = cms.untracked.PSet(
-SkipEvent = cms.untracked.vstring('ProductNotFound')
-)
+#process.options = cms.untracked.PSet(
+#SkipEvent = cms.untracked.vstring('ProductNotFound')
+#)
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring()
