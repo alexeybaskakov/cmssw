@@ -20,9 +20,9 @@ namespace edm {
     template <typename T>
     inline
     T const*
-    getProduct_(RefCore const& ref, const EDProductGetter* prodGetter) {
+    getProduct_(RefCore const& ref) {
       assert (!ref.isTransient());
-      WrapperBase const* product = ref.getProductPtr(typeid(T),prodGetter);
+      WrapperBase const* product = ref.getProductPtr(typeid(T));
       Wrapper<T> const* wrapper = static_cast<Wrapper<T> const*>(product);
       if (wrapper == nullptr) { 	 
         ref.wrongTypeException(typeid(T), typeid(*product)); 	 
@@ -40,27 +40,19 @@ namespace edm {
   T const*
   getProduct(RefCore const& ref) {
     T const* p = static_cast<T const*>(ref.productPtr());
-    if (p != nullptr) return p;
+    if (p != 0) return p;
     if (ref.isTransient()) {
       ref.nullPointerForTransientException(typeid(T));
     }
-    auto productGetter = ref.productGetter();
-    if(nullptr == productGetter) {
-      p =static_cast<T const*>(ref.productPtr());
-      if(p != nullptr) {
-        //another thread updated the value since we checked
-        return p;
-      }
-    }
-    return refcore::getProduct_<T>(ref, productGetter);
+    return refcore::getProduct_<T>(ref);
   }
 
   namespace refcore {
     template <typename T>
     inline
     T const*
-    getProductWithCoreFromRef_(RefCore const& ref, EDProductGetter const* prodGetter) {
-      WrapperBase const* product = ref.getProductPtr(typeid(T), prodGetter);
+    getProductWithCoreFromRef_(RefCore const& ref) {
+      WrapperBase const* product = ref.getProductPtr(typeid(T));
       Wrapper<T> const* wrapper = static_cast<Wrapper<T> const*>(product);
       if (wrapper == nullptr) {
         ref.wrongTypeException(typeid(T), typeid(*product));
@@ -75,19 +67,19 @@ namespace edm {
   template <typename T>
   inline
   T const*
-  getProductWithCoreFromRef(RefCore const& ref, EDProductGetter const* prodGetter) {
+  getProductWithCoreFromRef(RefCore const& ref) {
     if (ref.isTransient()) {
       ref.nullPointerForTransientException(typeid(T));
     }
-    return refcore::getProductWithCoreFromRef_<T>(ref, prodGetter);
+    return refcore::getProductWithCoreFromRef_<T>(ref);
   }
 
   namespace refcore {
     template <typename T>
     inline
     T const*
-    tryToGetProductWithCoreFromRef_(RefCore const& ref, EDProductGetter const* prodGetter) {
-      WrapperBase const* product = ref.tryToGetProductPtr(typeid(T),prodGetter);
+    tryToGetProductWithCoreFromRef_(RefCore const& ref) {
+      WrapperBase const* product = ref.tryToGetProductPtr(typeid(T));
       if(product == nullptr) {
         return nullptr;
       }
@@ -105,19 +97,19 @@ namespace edm {
   template <typename T>
   inline
   T const*
-  tryToGetProductWithCoreFromRef(RefCore const& ref, EDProductGetter const* prodGetter) {
+  tryToGetProductWithCoreFromRef(RefCore const& ref) {
     if (ref.isTransient()) {
       ref.nullPointerForTransientException(typeid(T));
     }
-    return refcore::tryToGetProductWithCoreFromRef_<T>(ref, prodGetter);
+    return refcore::tryToGetProductWithCoreFromRef_<T>(ref);
   }
 
   namespace refcore {
     template <typename T>
     inline
     T const*
-    getThinnedProduct_(RefCore const& ref, unsigned int& thinnedKey, EDProductGetter const* prodGetter) {
-      WrapperBase const* product = ref.getThinnedProductPtr(typeid(T), thinnedKey, prodGetter);
+    getThinnedProduct_(RefCore const& ref, unsigned int& thinnedKey) {
+      WrapperBase const* product = ref.getThinnedProductPtr(typeid(T), thinnedKey);
       Wrapper<T> const* wrapper = static_cast<Wrapper<T> const*>(product);
       return wrapper->product();
     }
@@ -126,7 +118,7 @@ namespace edm {
   template <typename T>
   inline
   T const*
-  getThinnedProduct(RefCore const& ref, unsigned int& thinnedKey, EDProductGetter const* prodGetter) {
+  getThinnedProduct(RefCore const& ref, unsigned int& thinnedKey) {
     // The pointer to a thinned collection will never be cached
     // T const* p = static_cast<T const*>(ref.productPtr());
     // if (p != 0) return p;
@@ -134,7 +126,7 @@ namespace edm {
     if (ref.isTransient()) {
       ref.nullPointerForTransientException(typeid(T));
     }
-    return refcore::getThinnedProduct_<T>(ref, thinnedKey, prodGetter);
+    return refcore::getThinnedProduct_<T>(ref, thinnedKey);
   }
 }
 #endif

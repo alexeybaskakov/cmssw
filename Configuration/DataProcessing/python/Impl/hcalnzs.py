@@ -10,6 +10,7 @@ import os
 import sys
 
 from Configuration.DataProcessing.Impl.pp import pp
+from Configuration.DataProcessing.RecoTLR import customisePrompt
 
 class hcalnzs(pp):
     def __init__(self):

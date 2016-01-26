@@ -208,6 +208,9 @@ namespace edm {
     /// Accessor for Process Configuration
     ProcessConfiguration const& processConfiguration() const {return moduleDescription().processConfiguration();}
 
+    /// Accessor for primary input source flag
+    bool primary() const {return primary_;}
+
     /// Accessor for global process identifier
     std::string const& processGUID() const {return processGUID_;}
 
@@ -438,6 +441,7 @@ namespace edm {
     std::unique_ptr<ProcessHistoryRegistry> processHistoryRegistry_;
     std::shared_ptr<BranchIDListHelper> branchIDListHelper_;
     std::shared_ptr<ThinnedAssociationsHelper> thinnedAssociationsHelper_;
+    bool const primary_;
     std::string processGUID_;
     Timestamp time_;
     mutable bool newRun_;

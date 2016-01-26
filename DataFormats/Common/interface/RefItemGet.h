@@ -28,15 +28,7 @@ namespace edm {
         if(item != nullptr) {
           return item;
         }
-        auto prodGetter = product.productGetter();
-        if(nullptr == prodGetter) {
-          item = static_cast<T const*>(product.productPtr());
-          if(item != nullptr) {
-            //Another thread updated the value since we checked
-            return item;
-          }
-        }
-        C const* prod = edm::template getProductWithCoreFromRef<C>(product, prodGetter);
+        C const* prod = edm::template getProductWithCoreFromRef<C>(product);
         /*
         typename C::const_iterator it = prod->begin();
          std::advance(it, item.key());
@@ -56,15 +48,7 @@ namespace edm {
         if(item != nullptr) {
           return item;
         }
-        auto getter = product.productGetter();
-        if(getter == nullptr) {
-          auto prod = product.productPtr();
-          if(prod != nullptr) {
-            //another thread updated the value since we last checked.
-            return static_cast<T const*>(prod);
-          }
-        }
-        C const* prod = edm::template tryToGetProductWithCoreFromRef<C>(product, getter);
+        C const* prod = edm::template tryToGetProductWithCoreFromRef<C>(product);
         if(prod != nullptr) {
           F func;
           item = func(*prod, key);
@@ -72,7 +56,7 @@ namespace edm {
           return item;
         }
         unsigned int thinnedKey = key;
-        prod = edm::template getThinnedProduct<C>(product, thinnedKey, getter);
+        prod = edm::template getThinnedProduct<C>(product, thinnedKey);
         F func;
         item = func(*prod, thinnedKey);
         product.setProductPtr(item);
@@ -104,12 +88,7 @@ namespace edm {
         if (ref.isTransient()) {
           return false;
         }
-        auto getter = ref.productGetter();
-        if(getter != nullptr) {
-          return ref.isThinnedAvailable(key,getter);
-        }
-        //another thread may have updated the cache
-        return nullptr != ref.productPtr();
+        return ref.isThinnedAvailable(key);
       }
     };
   }

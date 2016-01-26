@@ -3,10 +3,6 @@
 #include <climits>
 #include "RecoLocalCalo/HcalRecAlgos/interface/HcalDeterministicFit.h"
 
-constexpr float HcalDeterministicFit::invGpar[3];
-constexpr float HcalDeterministicFit::negthre[2];
-constexpr int HcalDeterministicFit::HcalRegion[2];
-
 using namespace std;
 
 HcalDeterministicFit::HcalDeterministicFit() {

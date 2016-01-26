@@ -42,7 +42,7 @@ namespace edm {
 
     std::shared_ptr<VectorInputSource> makeSecInput(ParameterSet const& ps);
 
-    std::shared_ptr<ProductRegistry> productRegistry_;
+    std::unique_ptr<ProductRegistry> productRegistry_;
 
     std::shared_ptr<VectorInputSource> const secInput_;
 
@@ -54,7 +54,7 @@ namespace edm {
 
     bool specified_;
 
-    bool sameLumiBlock_;
+    bool lumiSpecified_;
 
     bool firstEvent_;
 

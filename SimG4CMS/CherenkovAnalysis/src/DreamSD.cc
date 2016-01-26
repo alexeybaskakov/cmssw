@@ -196,7 +196,7 @@ void DreamSD::initMap(G4String sd, const DDCompactView & cpv) {
   G4String attribute = "ReadOutName";
   DDSpecificsFilter filter;
   DDValue           ddv(attribute,sd,0);
-  filter.setCriteria(ddv,DDCompOp::equals);
+  filter.setCriteria(ddv,DDSpecificsFilter::equals);
   DDFilteredView fv(cpv);
   fv.addFilter(filter);
   fv.firstChild();

@@ -91,9 +91,7 @@ EventWithHistory::EventWithHistory(const edm::Event& event, const L1AcceptBunchC
 	--counter;
       }
       else {
-	edm::LogWarning("L1AcceptBunchCrossingNotInOrder") << "L1AcceptBunchCrossing not in order: orbit " 
-							   << event.orbitNumber() << " BX " << event.bunchCrossing()
-							   << " orbit offset " << orbitoffset << " bx offset " << bxoffset << " :";
+	edm::LogWarning("L1AcceptBunchCrossingNotInOrder") << "L1AcceptBunchCrossing not in order: ";
 	for(L1AcceptBunchCrossingCollection::const_iterator debu=l1abcc.begin();debu!=l1abcc.end();++debu) {
 	  edm::LogPrint("L1AcceptBunchCrossingNotInOrder") << *debu;
 	}

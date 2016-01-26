@@ -121,6 +121,7 @@ process.quickTrackAssociatorByHits.SimToRecoDenominator = 'reco'
 
 ########### configuration MultiTrackValidator ########
 process.multiTrackValidator.associators = ['quickTrackAssociatorByHits']
+process.multiTrackValidator.skipHistoFit = False
 #process.cutsRecoTracks.quality = ['','highPurity']
 #process.cutsRecoTracks.quality = ['']
 process.multiTrackValidator.label = ['cutsRecoTracks']

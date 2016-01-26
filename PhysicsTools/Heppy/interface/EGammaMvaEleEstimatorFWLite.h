@@ -2,7 +2,6 @@
 #define PhysicsTools_Heppy_EGammaMvaEleEstimatorFWLite_h
 
 struct EGammaMvaEleEstimator;
-struct EGammaMvaEleEstimatorCSA14;
 namespace reco { struct Vertex; }
 namespace pat { struct Electron; }
 #include <vector>
@@ -19,9 +18,6 @@ class EGammaMvaEleEstimatorFWLite {
             kTrig = 0, // MVA for triggering electrons
             kTrigNoIP = 1, // MVA for triggering electrons without IP info
             kNonTrig = 2, // MVA for non-triggering electrons 
-            kTrigCSA14 = 3, // MVA for non-triggering electrons 
-            kNonTrigCSA14 = 4, // MVA for non-triggering electrons 
-            kNonTrigPhys14 = 5, // MVA for non-triggering electrons 
         };
 
         void initialize( std::string methodName,
@@ -36,7 +32,6 @@ class EGammaMvaEleEstimatorFWLite {
                 bool printDebug = false);
     private:
         EGammaMvaEleEstimator *estimator_;
-        EGammaMvaEleEstimatorCSA14 *estimatorCSA14_;
 };
 }
 #endif

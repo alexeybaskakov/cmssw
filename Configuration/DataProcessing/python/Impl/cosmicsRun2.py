@@ -10,6 +10,7 @@ import os
 import sys
 
 from Configuration.DataProcessing.Reco import Reco
+from Configuration.DataProcessing.RecoTLR import customiseCosmicDataRun2
 
 class cosmicsRun2(Reco):
     def __init__(self):
@@ -33,12 +34,9 @@ class cosmicsRun2(Reco):
         """
         if not 'skims' in args:
             args['skims']= ['@allForPromptCosmics']
-        if not 'customs' in args:
-            args['customs']=['Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2']
-        else:
-            args['customs'].append('Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2')
         process = Reco.promptReco(self,globalTag, **args)
 
+        customiseCosmicDataRun2(process)  
         return process
 
 
@@ -52,12 +50,9 @@ class cosmicsRun2(Reco):
 
         if not 'skims' in args:
             args['skims']= ['@allForExpressCosmics']
-        if not 'customs' in args:
-            args['customs']=['Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2']
-        else:
-            args['customs'].append('Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2')
         process = Reco.expressProcessing(self,globalTag, **args)
 
+        customiseCosmicDataRun2(process)  
         return process
 
     def visualizationProcessing(self, globalTag, **args):
@@ -68,12 +63,9 @@ class cosmicsRun2(Reco):
 
         """
 
-        if not 'customs' in args:
-            args['customs']=['Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2']
-        else:
-            args['customs'].append('Configuration/DataProcessing/RecoTLR.customiseCosmicDataRun2')
         process = Reco.visualizationProcessing(self,globalTag, **args)
 
+        customiseCosmicDataRun2(process)  
         process.reconstructionCosmics.remove(process.lumiProducer)
 
         return process

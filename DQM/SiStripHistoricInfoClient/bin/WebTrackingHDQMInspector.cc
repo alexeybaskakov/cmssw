@@ -10,7 +10,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include <TROOT.h>
 #include <TFile.h>
 #include <TSystem.h>
@@ -240,7 +240,7 @@ int main (int argc, char* argv[])
 {
   // load framework libraries
   gSystem->Load( "libFWCoreFWLite" );
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 
   if (argc < 9) {
     std::cerr << argv[0] << " [Database] [TagName] [Password] [WhiteListFile] [SelectedTrends] [FirstRun] [LastRun] [CondList]" << std::endl;

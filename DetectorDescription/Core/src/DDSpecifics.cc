@@ -1,54 +1,70 @@
 #include "DetectorDescription/Core/interface/DDSpecifics.h"
-#include "DetectorDescription/Core/src/Specific.h"
+#include "Specific.h"
 #include "DetectorDescription/Base/interface/DDdebug.h"
+
+#include <utility>
+
+// Message logger.
+#include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 using DDI::Specific;
 
+//DDBase<DDName,Specific*>::StoreT::pointer_type 
+//  DDBase<DDName,Specific*>::StoreT::instance_ = 0;
+
 DDSpecifics::DDSpecifics() : DDBase<DDName,Specific*>()
 { }
+
 
 DDSpecifics::DDSpecifics(const DDName & name) : DDBase<DDName,Specific*>()
 {
   prep_ = StoreT::instance().create(name);
 }
 
+
 DDSpecifics::DDSpecifics(const DDName & name,
-                         const std::vector<std::string> & partSelections,
+                         const selectors_type & partSelections,
 	      		 const DDsvalues_type & svalues,
 			 bool doRegex)
  : DDBase<DDName,Specific*>()
 {
   prep_ = StoreT::instance().create(name, new Specific(partSelections,svalues,doRegex));   
-  std::vector<std::pair<DDLogicalPart,std::pair<const DDPartSelection*, const DDsvalues_type*> > > v;
+  typedef std::vector<std::pair<DDLogicalPart,std::pair<const DDPartSelection*, const DDsvalues_type*> > > strange_type;
+  strange_type v;
   rep().updateLogicalPart(v);
-  for( auto& it : v ) {
-    if( it.first.isDefined().second ) {
-      it.first.addSpecifics( it.second );
-      DCOUT('C', "add specifics to LP: partsel=" << *( it.second.first ));
+  strange_type::iterator it = v.begin();
+  for(; it != v.end(); ++it) {
+    if (it->first.isDefined().second) {
+      it->first.addSpecifics(it->second);
+      DCOUT('C', "add specifics to LP: partsel=" << *(it->second.first) );
     }
     else {
-      throw cms::Exception("DDException") << "Definition of LogicalPart missing! name="
-					  << it.first.ddname().fullname();
+      std::string serr("Definition of LogicalPart missing! name=");
+      serr+= it->first.ddname().fullname();
+      throw cms::Exception("DDException") << serr;
     }
   }
 } 
+    
 
 DDSpecifics::~DDSpecifics() { }
 
-const std::vector<DDPartSelection> & DDSpecifics::selection() const
+
+const std::vector<DDPartSelection> & DDSpecifics::selection() const //
 { 
   return rep().selection(); 
 }
+  
 
 const DDsvalues_type & DDSpecifics::specifics() const
 { 
   return rep().specifics(); 
 }         
 
-// bool DDSpecifics::nodes(DDNodes & result) const 
-// {
-//    return rep().nodes(result);
-// }
+bool DDSpecifics::nodes(DDNodes & result) const 
+{
+   return rep().nodes(result);
+}
 
 /** node() will only work, if
     - there is only one PartSelection std::string
@@ -63,6 +79,12 @@ std::pair<bool,DDExpandedView> DDSpecifics::node() const
   return rep().node();
 }
   	
+// void DDSpecifics::clear()
+// {
+//  StoreT::instance().clear();
+// }
+
+			 			
 std::ostream & operator<<( std::ostream  & os, const DDSpecifics & sp)
 {
   DDBase<DDName,DDI::Specific*>::def_type defined(sp.isDefined());
@@ -79,12 +101,15 @@ std::ostream & operator<<( std::ostream  & os, const DDSpecifics & sp)
     os << "* specific not declared * ";  
   }  
   return os;
+
 }
+
 
 std::ostream & operator<<( std::ostream & os, const std::vector<std::string> & v)
 {
-  for( const auto& it : v ) {
-    os << it << std::endl;
+  std::vector<std::string>::const_iterator it = v.begin();
+  for (; it!=v.end(); ++it) {
+    os << *it << std::endl;
   }
   return os;
 }

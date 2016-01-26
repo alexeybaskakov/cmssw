@@ -1,6 +1,6 @@
 gSystem->Load("libFWCoreFWLite");
 
-FWLiteEnabler::enable();
+AutoLibraryLoader::enable();
 
 // reco file with vertices
 TFile f("pv_reco.root");

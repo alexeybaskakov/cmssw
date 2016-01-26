@@ -10,6 +10,7 @@
 #include "DetectorDescription/Core/interface/DDTransform.h"
 #include "DetectorDescription/Core/interface/DDExpandedView.h"
 #include "DetectorDescription/Core/interface/DDName.h"
+//#include "DetectorDescription/Core/interface/DDInit.h"
 
 typedef CaloCellGeometry::CCGFloat CCGFloat ;
 
@@ -136,16 +137,16 @@ DDFilter* EcalTBHodoscopeGeometryLoaderFromDDD::getDDFilter()
    filter->setCriteria( DDValue( "SensitiveDetector",
 				 "EcalTBH4BeamDetector",
 				 0 ),
-			DDCompOp::equals,
-			DDLogOp::AND,
+			DDSpecificsFilter::equals,
+			DDSpecificsFilter::AND,
 			true,
 			true ) ;
 
    filter->setCriteria( DDValue( "ReadOutName",
 				 "EcalTBH4BeamHits",
 				 0 ),
-			DDCompOp::equals,
-			DDLogOp::AND,
+			DDSpecificsFilter::equals,
+			DDSpecificsFilter::AND,
 			true,
 			true ) ;
    return filter;

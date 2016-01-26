@@ -20,8 +20,3 @@ DEFINE_FWK_MODULE(MuonProducer);
 DEFINE_FWK_MODULE(MuonTimingProducer);
 DEFINE_FWK_MODULE(MuonSelectionTypeValueMapProducer);
 DEFINE_FWK_MODULE(InterestingEcalDetIdProducer);
-
-// For the VID framework
-#include "PhysicsTools/SelectorUtils/interface/VersionedIdProducer.h"
-typedef VersionedIdProducer<reco::MuonPtr> VersionedMuonIdProducer;
-DEFINE_FWK_MODULE(VersionedMuonIdProducer);

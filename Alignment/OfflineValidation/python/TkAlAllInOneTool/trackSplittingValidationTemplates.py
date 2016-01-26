@@ -141,9 +141,7 @@ process.TrackRefitter2 = process.TrackRefitter1.clone(
 
 ### Now adding the construction of global Muons
 # what Chang did...
-#   In 74X it no longer works if ReconstructionCosmics is imported
-#   Results in 73X are identical with or without it so it seems safe to remove
-#process.load("Configuration.StandardSequences.ReconstructionCosmics_cff")
+process.load("Configuration.StandardSequences.ReconstructionCosmics_cff")
 
 process.cosmicValidation = cms.EDAnalyzer("CosmicSplitterValidation",
 	ifSplitMuons = cms.bool(False),

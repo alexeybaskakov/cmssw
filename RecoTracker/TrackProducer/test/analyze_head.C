@@ -1,7 +1,7 @@
 {
 
   gSystem->Load("libFWCoreFWLite.so"); 
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
   TFile file("recoTracks.root");
 
 }

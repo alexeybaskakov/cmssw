@@ -18,27 +18,27 @@ public:
 
   virtual InvalidTrackingRecHit * clone() const GCC11_OVERRIDE {return new InvalidTrackingRecHit(*this);}
 #ifndef __GCCXML__
-  virtual RecHitPointer cloneSH() const GCC11_OVERRIDE { return RecHitPointer(clone());}
+  virtual RecHitPointer cloneSH() const { return RecHitPointer(clone());}
 #endif
 
   
-  virtual AlgebraicVector parameters() const GCC11_OVERRIDE;
+  virtual AlgebraicVector parameters() const;
 
-  virtual AlgebraicSymMatrix parametersError() const GCC11_OVERRIDE;
+  virtual AlgebraicSymMatrix parametersError() const;
 
-  virtual AlgebraicMatrix projectionMatrix() const GCC11_OVERRIDE;
+  virtual AlgebraicMatrix projectionMatrix() const;
 
-  virtual int dimension() const GCC11_OVERRIDE { return 0;}
+  virtual int dimension() const { return 0;}
 
-  virtual LocalPoint localPosition() const GCC11_OVERRIDE;
+  virtual LocalPoint localPosition() const;
 
-  virtual LocalError localPositionError() const GCC11_OVERRIDE;
+  virtual LocalError localPositionError() const;
 
-  virtual std::vector<const TrackingRecHit*> recHits() const GCC11_OVERRIDE;
+  virtual std::vector<const TrackingRecHit*> recHits() const;
 
-  virtual std::vector<TrackingRecHit*> recHits() GCC11_OVERRIDE;
+  virtual std::vector<TrackingRecHit*> recHits();
 
-  virtual bool sharesInput( const TrackingRecHit* other, SharedInputType what) const GCC11_OVERRIDE;
+  virtual bool sharesInput( const TrackingRecHit* other, SharedInputType what) const;
 
 private:
 

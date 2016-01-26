@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <cassert>
 
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "PhysicsTools/FWLite/interface/EventContainer.h"
 #include "PhysicsTools/FWLite/interface/dout.h"
 #include "DataFormats/FWLite/interface/MultiChainEvent.h"
@@ -38,7 +38,7 @@ EventContainer::EventContainer (optutl::CommandLineParser &parser,
    // Call the autoloader if not already called.
    if (! sm_autoloaderCalled)
    {
-      FWLiteEnabler::enable();
+      AutoLibraryLoader::enable();
       sm_autoloaderCalled = true;      
    }
 

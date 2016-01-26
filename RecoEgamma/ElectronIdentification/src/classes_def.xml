@@ -1,6 +1,4 @@
 <lcgdict>  
-  <class pattern="VersionedSelector<*>"/>
-  <class pattern="MakeVersionedSelector<*>"/>
-  <class pattern="PrintVIDToString<*>"/>
-  <class pattern="MakePtrFromCollection<*>"/>
+  <class name="VersionedGsfElectronSelector"/>
+  <class name="VersionedPatElectronSelector"/>
 </lcgdict>

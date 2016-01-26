@@ -182,12 +182,7 @@ CondDBESSource::CondDBESSource( const edm::ParameterSet& iConfig ) :
 			  globaltagList,
 			  replacements,
 			  gtMetadata);
-  // if no job specific setting has been found, use the GT timestamp
-  if(snapshotTime.is_not_a_date_time()) 
-    snapshotTime = gtMetadata.snapshotTime;
-  // finally, if the snapshot is set to infinity, reset the snapshot to null, to take the full iov set...
-  if(snapshotTime == boost::posix_time::time_from_string(std::string(cond::time::MAX_TIMESTAMP) ) )
-    snapshotTime = boost::posix_time::ptime();
+  if(snapshotTime.is_not_a_date_time()) snapshotTime = gtMetadata.snapshotTime;
   
   TagCollection::iterator it;
   TagCollection::iterator itBeg = m_tagCollection.begin();

@@ -40,9 +40,9 @@ class FastHFShowerLibrary {
   
 public:
 
-  // Constructor and Destructor
+// Constructor and Destructor
   FastHFShowerLibrary(edm::ParameterSet const & p);
-  ~FastHFShowerLibrary(){;}
+  ~FastHFShowerLibrary();
 
 public:
 
@@ -53,15 +53,15 @@ public:
 
 private:
 
-  const edm::ParameterSet fast;
-  std::unique_ptr<HFShowerLibrary> hfshower;
-  std::unique_ptr<HcalNumberingFromDDD> numberingFromDDD;
-  HcalNumberingScheme numberingScheme;
-  
+  HcalNumberingScheme  *numberingScheme;
+  HcalNumberingFromDDD *numberingFromDDD;
+
   std::map<CaloHitID,float> hitMap;
 
   bool applyFidCut;
-  std::string name;
 
+  HFShowerLibrary* hfshower;
+  edm::ParameterSet const fast;
+  std::string name;
 };
 #endif

@@ -97,10 +97,10 @@ class OfflineValidation(GenericValidationData):
         """
         repMap = self.getRepMap()
         if validationsSoFar == "":
-            validationsSoFar = ('PlotAlignmentValidation p("root://eoscms//eos/cms%(finalResultFile)s",'
-                                '"%(title)s", %(color)s, %(style)s);\n')%repMap
+            validationsSoFar = ('PlotAlignmentValidation p("%(finalOutputFile)s",'
+                                '"%(name)s", %(color)s, %(style)s);\n')%repMap
         else:
-            validationsSoFar += ('  p.loadFileList("root://eoscms//eos/cms%(finalResultFile)s", "%(title)s",'
+            validationsSoFar += ('p.loadFileList("%(finalOutputFile)s", "%(name)s",'
                                  '%(color)s, %(style)s);\n')%repMap
         return validationsSoFar
 
@@ -111,9 +111,9 @@ class OfflineValidation(GenericValidationData):
         """
         repMap = self.getRepMap()
 
-        parameters = "root://eoscms//eos/cms" + ",root://eoscms//eos/cms".join(repMap["resultFiles"])
+        parameters = ",".join(repMap["outputFiles"])
 
-        mergedoutputfile = "root://eoscms//eos/cms.oO[finalResultFile]Oo."
+        mergedoutputfile = repMap["finalOutputFile"]
         validationsSoFar += ('root -x -b -q -l "TkAlOfflineJobsMerge.C(\\\"'
                              +parameters+'\\\",\\\"'+mergedoutputfile+'\\\")"'
                              +"\n")

@@ -219,15 +219,13 @@ void CaloGeometryHelper::buildNeighbourArray()
 
       if(nneighbours==9)
 	{
-	  //barrelNeighbours_[hashedindex].reserve(8);
-	  unsigned int nn=0;
+	  barrelNeighbours_[hashedindex].reserve(8);
 	  for(unsigned in=0;in<nneighbours;++in)
 	    {
 	      // remove the centre
 	      if(neighbours[in]!=vec[ic]) 
 		{
-		  barrelNeighbours_[hashedindex][nn]=(neighbours[in]);
-		  nn++;
+		  barrelNeighbours_[hashedindex].push_back(neighbours[in]);
 		  //	      std::cout << " Neighbour " << in << " " << EBDetId(neighbours[in]) << std::endl;
 		}
 	    }
@@ -235,7 +233,7 @@ void CaloGeometryHelper::buildNeighbourArray()
       else
 	{
 	  DetId central(vec[ic]);
-	  //barrelNeighbours_[hashedindex].resize(8,DetId(0));
+	  barrelNeighbours_[hashedindex].resize(8,DetId(0));
 	  for(unsigned idir=0;idir<8;++idir)
 	    {
 	      DetId testid=central;
@@ -274,22 +272,20 @@ void CaloGeometryHelper::buildNeighbourArray()
 
       if(nneighbours==9)
 	{
-	  //endcapNeighbours_[hashedindex].reserve(8);
-	  unsigned int nn=0;
+	  endcapNeighbours_[hashedindex].reserve(8);
 	  for(unsigned in=0;in<nneighbours;++in)
 	    {	  
 	      // remove the centre
 	      if(neighbours[in]!=vece[ic]) 
 		{
-		  endcapNeighbours_[hashedindex][nn]=(neighbours[in]);
-		  nn++;
+		  endcapNeighbours_[hashedindex].push_back(neighbours[in]);
 		}
 	    }
 	}
       else
 	{
 	  DetId central(vece[ic]);
-	  //endcapNeighbours_[hashedindex].resize(8,DetId(0));
+	  endcapNeighbours_[hashedindex].resize(8,DetId(0));
 	  for(unsigned idir=0;idir<8;++idir)
 	    {
 	      DetId testid=central;
@@ -303,7 +299,7 @@ void CaloGeometryHelper::buildNeighbourArray()
   neighbourmapcalculated_ = true;
 }
 
-const CaloGeometryHelper::NeiVect& CaloGeometryHelper::getNeighbours(const DetId& detid) const
+const std::vector<DetId>& CaloGeometryHelper::getNeighbours(const DetId& detid) const
 {
   return (detid.subdetId()==EcalBarrel)?barrelNeighbours_[EBDetId(detid).hashedIndex()]:
     endcapNeighbours_[EEDetId(detid).hashedIndex()];

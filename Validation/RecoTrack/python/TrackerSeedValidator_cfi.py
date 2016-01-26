@@ -17,6 +17,12 @@ trackerSeedValidator = cms.EDAnalyzer("TrackerSeedValidator",
     # if the track collectio is missing (e.g. HLT):
     ignoremissingtrackcollection=cms.untracked.bool(False),
     
+    # set true if you do not want efficiency fakes and resolution fit
+    # to be calculated in the end run (for automated validation):
+    skipHistoFit=cms.untracked.bool(False),
+
+    runStandalone = cms.bool(True),
+    
     ### matching configuration ###
     associators = cms.VInputTag("trackAssociatorByHits"),
 
@@ -25,20 +31,7 @@ trackerSeedValidator = cms.EDAnalyzer("TrackerSeedValidator",
     label_tp_fake = cms.InputTag("mix","MergedTrackTruth"),
     label_tv = cms.InputTag("mix","MergedTrackTruth"),
     label_pileupinfo = cms.InputTag("addPileupInfo"),
-    sim = cms.VInputTag(
-      cms.InputTag("g4SimHits", "TrackerHitsPixelBarrelHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsPixelBarrelLowTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsPixelEndcapHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsPixelEndcapLowTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTECHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTECLowTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTIBHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTIBLowTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTIDHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTIDLowTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTOBHighTof"),
-      cms.InputTag("g4SimHits", "TrackerHitsTOBLowTof")
-    ),
+    sim = cms.string('g4SimHits'),
     parametersDefiner = cms.string('LhcParametersDefinerForTP'),          # collision like tracks
 
     ### reco input configuration ###
@@ -47,6 +40,7 @@ trackerSeedValidator = cms.EDAnalyzer("TrackerSeedValidator",
     
     ### output configuration
     dirName = cms.string('Tracking/Seed/'),
+    outputFile = cms.string(''),
 
     TTRHBuilder = cms.string('WithTrackAngle')
 )

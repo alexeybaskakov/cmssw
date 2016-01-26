@@ -32,7 +32,6 @@ SiStripMonitorDigi.TH1ADCsCoolestStrip.moduleswitchon = False
 SiStripMonitorDigi.TH1ADCsHottestStrip.moduleswitchon = False
 SiStripMonitorDigi.TH1DigiADCs.moduleswitchon = False
 SiStripMonitorDigi.TH1StripOccupancy.moduleswitchon = False
-SiStripMonitorDigi.TH1NumberOfDigis.moduleswitchon = False
 
 from DQM.SiStripMonitorDigi.SiStripBaselineValidator_cfi import *
 
@@ -53,24 +52,22 @@ SiStripMonitorClusterReal.ClusterHisto = True
 SiStripMonitorClusterReal.TH1NrOfClusterizedStrips.moduleswitchon = False
 SiStripMonitorClusterReal.TH1ClusterNoise.moduleswitchon = False
 SiStripMonitorClusterReal.TH1ClusterStoN.moduleswitchon = False
-SiStripMonitorClusterReal.TH1ClusterCharge.moduleswitchon = False
+SiStripMonitorClusterReal.TH1ClusterCharge.moduleswitchon = True
 SiStripMonitorClusterReal.TH1ClusterWidth.moduleswitchon = False
 SiStripMonitorClusterReal.TH1ModuleLocalOccupancy.moduleswitchon = False
-SiStripMonitorClusterReal.TH1nClusters.moduleswitchon = False
-SiStripMonitorClusterReal.TH1ClusterPos.moduleswitchon = False
 
 # SiStripMonitorTrack ####
 # Clone for Cosmic Track Finder
 import DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi
 SiStripMonitorTrack_cosmicTk = DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi.SiStripMonitorTrack.clone()
 SiStripMonitorTrack_cosmicTk.TrackProducer = 'cosmictrackfinderP5'
-SiStripMonitorTrack_cosmicTk.Mod_On        = False
+SiStripMonitorTrack_cosmicTk.Mod_On        = True
 
 # Clone for CKF Tracks
 import DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi
 SiStripMonitorTrack_ckf = DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi.SiStripMonitorTrack.clone()
 SiStripMonitorTrack_ckf.TrackProducer      = 'ctfWithMaterialTracksP5'
-SiStripMonitorTrack_ckf.Mod_On             = False
+SiStripMonitorTrack_ckf.Mod_On             = True
 
 # Clone fir Road Search  Tracks
 #import DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi
@@ -82,7 +79,7 @@ SiStripMonitorTrack_ckf.Mod_On             = False
 import DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi
 SiStripMonitorTrack_gentk = DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi.SiStripMonitorTrack.clone()
 SiStripMonitorTrack_gentk.TrackProducer    = 'generalTracks'
-SiStripMonitorTrack_gentk.Mod_On           = False
+SiStripMonitorTrack_gentk.Mod_On           = True
 
 # Clone for Heavy Ion Tracks (for HI Collisions)
 import DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi

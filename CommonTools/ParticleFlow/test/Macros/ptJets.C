@@ -2,7 +2,7 @@
 
 
   gSystem->Load("libFWCoreFWLite.so");
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
   TFile f("patTuple_PF2PAT.root");
   
   TTree *Events = 0;

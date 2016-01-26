@@ -3,5 +3,5 @@
     gSystem->Load("libtestCondToolsUtilities");
     gSystem->Load("libCondFormatsEcalObjects");
     gSystem->Load("libCondFormatsCalibration");
-    FWLiteEnabler::enable();
+    AutoLibraryLoader::enable();
 }  

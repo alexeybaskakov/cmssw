@@ -18,7 +18,6 @@ class  PixelCPEGenericESProducer: public edm::ESProducer{
   edm::ESInputTag magname_;
   bool useLAWidthFromDB_;
   bool useLAAlignmentOffsets_;
-  bool UseErrorsFromTemplates_;
 };
 
 

@@ -10,6 +10,7 @@ import os
 import sys
 
 from Configuration.DataProcessing.Impl.pp import pp
+from Configuration.DataProcessing.RecoTLR import customisePromptRun2
 
 class hcalnzsRun2(pp):
     def __init__(self):
@@ -31,12 +32,8 @@ class hcalnzsRun2(pp):
         """
         if not 'skims' in args:
             args['skims']=['HcalCalMinBias']
-
-        if not 'customs' in args:
-            args['customs']=['Configuration/DataProcessing/RecoTLR.customisePromptRun2']
-        else:
-            args['customs'].append('Configuration/DataProcessing/RecoTLR.customisePromptRun2')
-
         process = pp.promptReco(self,globalTag,**args)
         
+        #add the former top level patches here
+        customisePromptRun2(process)
         return process

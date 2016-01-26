@@ -16,8 +16,6 @@
 #include "FWCore/Utilities/interface/Digest.h"
 #include "FWCore/Utilities/interface/EDMException.h"
 
-#include "DataFormats/Provenance/interface/ModuleDescription.h"
-
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -953,17 +951,12 @@ namespace edm {
   // Free function to return a parameterSet given its ID.
   ParameterSet const&
   getParameterSet(ParameterSetID const& id) {
-    ParameterSet const* result = nullptr;
-    if(nullptr == (result = pset::Registry::instance()->getMapped(id))) {
-      throw Exception(errors::LogicError, "MissingParameterSet:")
+    ParameterSet const* result = 0;
+    if(0 == (result = pset::Registry::instance()->getMapped(id))) {
+      throw Exception(errors::Configuration, "MissingParameterSet:")
         << "Parameter Set ID '" << id << "' not found.";
     }
     return *result;
-  }
-
-  ParameterSet const&
-  getProcessParameterSetContainingModule(ModuleDescription const& moduleDescription) {
-    return getParameterSet(moduleDescription.mainParameterSetID());
   }
 
   void ParameterSet::deprecatedInputTagWarning(std::string const& name,

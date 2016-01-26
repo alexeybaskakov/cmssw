@@ -20,7 +20,7 @@
 #include "TTree.h"
 
 // user include files
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
 
@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) try
    }
    
    
-   FWLiteEnabler::enable();
+   AutoLibraryLoader::enable();
 
    TClass* cls = TClass::GetClass(branch->GetClassName());
    if(0==cls) {

@@ -20,7 +20,6 @@ class RunPromptReco:
         self.scenario = None
         self.writeRECO = False
         self.writeAOD = False
-        self.writeMINIAOD = False
 	self.writeDQM = False
 	self.writeDQMIO = False
         self.noOutput = False
@@ -57,9 +56,6 @@ class RunPromptReco:
         if self.writeAOD:
             dataTiers.append("AOD")
             print "Configuring to Write out AOD"
-        if self.writeMINIAOD:
-            dataTiers.append("MINIAOD")
-            print "Configuring to Write out MiniAOD"
 	if self.writeDQM:
             dataTiers.append("DQM")
             print "Configuring to Write out DQM"
@@ -111,7 +107,7 @@ class RunPromptReco:
 
 
 if __name__ == '__main__':
-    valid = ["scenario=", "reco", "aod", "miniaod","dqm", "dqmio", "no-output",
+    valid = ["scenario=", "reco", "aod", "dqm", "dqmio", "no-output",
              "global-tag=", "lfn=", "alcarecos=" ]
     usage = \
 """
@@ -121,7 +117,6 @@ Where options are:
  --scenario=ScenarioName
  --reco (to enable RECO output)
  --aod (to enable AOD output)
- --miniaod (to enable MiniAOD output)
  --dqm (to enable DQM output)
  --dqmio (to enable DQMIO output)
  --no-output (create config with no output, overrides other settings)
@@ -150,15 +145,13 @@ python RunPromptReco.py --scenario=pp --reco --aod --dqmio --global-tag GLOBALTA
         if opt == "--scenario":
             recoinator.scenario = arg
         if opt == "--reco":
-            recoinator.writeRECO = True
+            recoinator.writeReco = True
         if opt == "--aod":
-            recoinator.writeAOD = True
-        if opt == "--miniaod":
-            recoinator.writeMINIAOD = True
+            recoinator.writeAod = True
         if opt == "--dqm":
-            recoinator.writeDQM = True
+            recoinator.writeDqm = True
         if opt == "--dqmio":
-            recoinator.writeDQMIO = True
+            recoinator.writeDqmio = True
         if opt == "--no-output":
             recoinator.noOutput = True
         if opt == "--global-tag":

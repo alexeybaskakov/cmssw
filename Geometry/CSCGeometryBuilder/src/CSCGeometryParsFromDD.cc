@@ -34,8 +34,8 @@ bool CSCGeometryParsFromDD::build( const DDCompactView* cview
 
   DDSpecificsFilter filter;
   filter.setCriteria(muval, // name & value of a variable 
-		     DDCompOp::equals,
-		     DDLogOp::AND, 
+		     DDSpecificsFilter::equals,
+		     DDSpecificsFilter::AND, 
 		     true, // compare strings otherwise doubles
 		     true // use merged-specifics or simple-specifics
 		     );

@@ -15,12 +15,17 @@ from FastSimulation.Tracking.GlobalPixelTracking_cff import *
 import FastSimulation.Tracking.TrackCandidateProducer_cfi
 
 hltCkfActivityTrackCandidates = FastSimulation.Tracking.TrackCandidateProducer_cfi.trackCandidateProducer.clone()
-hltCkfActivityTrackCandidates.src = cms.InputTag("hltActivityStartUpElectronPixelSeeds")
+hltCkfActivityTrackCandidates.SeedProducer = cms.InputTag("hltActivityStartUpElectronPixelSeeds")
+hltCkfActivityTrackCandidates.MaxNumberOfCrossedLayers = 999
+hltCkfActivityTrackCandidates.SeedCleaning = True
 hltCkfActivityTrackCandidates.SplitHits = False
 
 hltActivityCkfTrackCandidatesForGSF = FastSimulation.Tracking.TrackCandidateProducer_cfi.trackCandidateProducer.clone()
-hltActivityCkfTrackCandidatesForGSF.src = cms.InputTag("hltActivityStartUpElectronPixelSeeds")
+hltActivityCkfTrackCandidatesForGSF.SeedProducer = cms.InputTag("hltActivityStartUpElectronPixelSeeds")
+hltActivityCkfTrackCandidatesForGSF.MaxNumberOfCrossedLayers = 999
+hltActivityCkfTrackCandidatesForGSF.SeedCleaning = True
 hltActivityCkfTrackCandidatesForGSF.SplitHits = True
+
 
 
 # CTF track fit with material

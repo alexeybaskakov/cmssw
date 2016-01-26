@@ -26,7 +26,7 @@ you can get by these lines (add them to your rootlogon.C):
 if (gSystem->Getenv("CMSSW_RELEASE_BASE") != '\0') {
   printf("\nLoading CMSSW FWLite...\n");
   gSystem->Load("libFWCoreFWLite");
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 }
 
 */
@@ -72,7 +72,7 @@ int hadd(const char *filesSeparatedByCommaOrEmpty = "", const char * outputFile 
     Int_t nEvt = 0;
     //get file name
     std::cout<<"Type in general file name (ending is added automatically)."<<std::endl;
-    std::cout<<"i.e. Validation_CRUZET_data_ as name, code adds 1,2,3 + .root"<<std::endl;
+    std::cout<<"i.e. Validation_CRUZET_data as name, code adds 1,2,3 + .root"<<std::endl;
     std::cin>>inputFileName;
     
     std::cout << "Type number of files to merge." << std::endl;
@@ -117,9 +117,10 @@ int hadd(const char *filesSeparatedByCommaOrEmpty = "", const char * outputFile 
   TString outputFileString;
 
   if (strlen(outputFile)!=0) 
-    outputFileString = TString(outputFile);
+    outputFileString = TString("$OUTPUTDIR/")+ TString(outputFile);
   else
-    outputFileString = "merge_output.root";
+    outputFileString = "$OUTPUTDIR/merge_output.root";
+  
   TFile *Target = TFile::Open( outputFileString, "RECREATE" );
   MergeRootfile( Target, FileList);
   std::cout << "Finished merging of histograms." << std::endl;
@@ -174,9 +175,9 @@ int hadd(const char *filesSeparatedByCommaOrEmpty = "", const char * outputFile 
 /////////////////////////////////////////////////////////////////////////
 void MergeRootfile( TDirectory *target, TList *sourcelist) {
 
-  cout << target->GetPath() << endl;
-  TString path( (char*)strstr( target->GetPath(), ".root:" ) );
-  path.Remove( 0, 7 );
+ 
+  TString path( (char*)strstr( target->GetPath(), ":" ) );
+  path.Remove( 0, 2 );
   //  TString tmp;
   TFile *first_source = (TFile*)sourcelist->First();
   first_source->cd( path );

@@ -1,5 +1,5 @@
-#ifndef L1Trigger_CSCTriggerPrimitives_CSCMotherboard_h
-#define L1Trigger_CSCTriggerPrimitives_CSCMotherboard_h
+#ifndef CSCTriggerPrimitives_CSCMotherboard_h
+#define CSCTriggerPrimitives_CSCMotherboard_h
 
 /** \class CSCMotherboard
  *
@@ -34,9 +34,9 @@
  *
  */
 
-#include "L1Trigger/CSCTriggerPrimitives/src/CSCAnodeLCTProcessor.h"
-#include "L1Trigger/CSCTriggerPrimitives/src/CSCCathodeLCTProcessor.h"
-#include "DataFormats/CSCDigi/interface/CSCCorrelatedLCTDigi.h"
+#include <L1Trigger/CSCTriggerPrimitives/src/CSCAnodeLCTProcessor.h>
+#include <L1Trigger/CSCTriggerPrimitives/src/CSCCathodeLCTProcessor.h>
+#include <DataFormats/CSCDigi/interface/CSCCorrelatedLCTDigi.h>
 
 class CSCMotherboard
 {
@@ -75,10 +75,10 @@ class CSCMotherboard
   void setConfigParameters(const CSCDBL1TPParameters* conf);
 
   /** Anode LCT processor. */
-  std::unique_ptr<CSCAnodeLCTProcessor> alct;
+  CSCAnodeLCTProcessor* alct;
 
   /** Cathode LCT processor. */
-  std::unique_ptr<CSCCathodeLCTProcessor> clct;
+  CSCCathodeLCTProcessor* clct;
 
  // VK: change to protected, to allow inheritance
  protected:
@@ -93,7 +93,6 @@ class CSCMotherboard
   const unsigned theSector;
   const unsigned theSubsector;
   const unsigned theTrigChamber;
-  unsigned theRing;
 
   /** Flag for MTCC data. */
   bool isMTCC;
@@ -108,9 +107,6 @@ class CSCMotherboard
   unsigned int mpc_block_me1a;
   unsigned int alct_trig_enable, clct_trig_enable, match_trig_enable;
   unsigned int match_trig_window_size, tmb_l1a_window_size;
-
-  /** Central BX */
-  int lct_central_bx;
 
   /** SLHC: whether to not reuse ALCTs that were used by previous matching CLCTs */
   bool drop_used_alcts;
@@ -151,9 +147,5 @@ class CSCMotherboard
 
   // Method for tests
   void testLCT();
-
-  // utilities for sorting
-  static bool sortByQuality(const CSCCorrelatedLCTDigi&, const CSCCorrelatedLCTDigi&); 
-  static bool sortByGEMDphi(const CSCCorrelatedLCTDigi&, const CSCCorrelatedLCTDigi&); 
 };
 #endif

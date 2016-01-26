@@ -18,7 +18,7 @@ mix = cms.EDProducer("MixingModule",
     playback = cms.untracked.bool(False),
     useCurrentProcessOnly = cms.bool(False),
 
-    input = cms.SecSource("EmbeddedRootSource",
+    input = cms.SecSource("PoolSource",
         type = cms.string('fixed'),
         nbPileupEvents = cms.PSet(
             averageNumber = cms.double(40.0)
@@ -35,7 +35,7 @@ mix = cms.EDProducer("MixingModule",
                                                ## need out of time bunch crossings
         fileNames = FileNames
     ),
-    cosmics = cms.SecSource("EmbeddedRootSource",
+    cosmics = cms.SecSource("PoolSource",
         nbPileupEvents = cms.PSet(
             averageNumber = cms.double(1.)
         ),

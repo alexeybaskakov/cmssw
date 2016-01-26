@@ -9,7 +9,7 @@ void rootlogon() {
 
 void loadFWLite() {
   gSystem->Load("libFWCoreFWLite.so");
-  FWLiteEnabler::enable();
+  AutoLibraryLoader::enable();
 }
 
 TTree* getEventsrootlogon() {

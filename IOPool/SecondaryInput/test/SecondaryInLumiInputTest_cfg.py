@@ -17,8 +17,8 @@ process.source = cms.Source("PoolSource",
 )
 
 process.Thing = cms.EDProducer("SecondaryProducer",
-    input = cms.SecSource("EmbeddedRootSource",
-         sameLumiBlock = cms.untracked.bool(True),
+    lumiSpecified = cms.untracked.bool(True),
+    input = cms.SecSource("PoolSource",
         fileNames = cms.untracked.vstring('file:SecondaryInputTest2.root')
     )
 )

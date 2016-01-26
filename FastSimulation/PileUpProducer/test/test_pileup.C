@@ -4,7 +4,7 @@
 Don't forget these commands, if they are not in your rootlogon.C:
 
    gSystem->Load("libFWCoreFWLite.so"); 
-   FWLiteEnabler::enable();
+   AutoLibraryLoader::enable();
    gSystem->Load("libDataFormatsFWLite.so");
 
 */

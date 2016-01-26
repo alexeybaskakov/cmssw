@@ -30,7 +30,6 @@ namespace cms {
 }
 
 namespace edm {
-  class ModuleDescription;
   typedef std::vector<ParameterSet> VParameterSet;
 
   class ParameterSet {
@@ -335,9 +334,6 @@ namespace edm {
   // Free function to retrieve a parameter set, given the parameter set ID.
   ParameterSet const&
   getParameterSet(ParameterSetID const& id);
-
-  ParameterSet const&
-  getProcessParameterSetContainingModule(ModuleDescription const& moduleDescription);
 
   // specializations
   // ----------------------------------------------------------------------

@@ -233,8 +233,3 @@ EDAnalyzerAdaptorBase::doPostForkReacquireResources(unsigned int iChildIndex, un
     mod->postForkReacquireResources(iChildIndex,iNumberOfChildren);
   }
 }
-
-void
-EDAnalyzerAdaptorBase::setModuleDescriptionPtr(EDAnalyzerBase* m) {
-  m->setModuleDescriptionPtr(&moduleDescription_);
-}

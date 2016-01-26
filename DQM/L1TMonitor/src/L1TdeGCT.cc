@@ -5,7 +5,6 @@ using namespace dedefs;
 
 const int L1TdeGCT::nGctColl_;
 const int L1TdeGCT::nerr;
-const int L1TdeGCT::nStage1Layer2Coll_;
 
 L1TdeGCT::L1TdeGCT(const edm::ParameterSet& iConfig) {
 

@@ -9,13 +9,13 @@ class loadFWLite {
    public:
       loadFWLite() {
          gSystem->Load("libFWCoreFWLite");
-         FWLiteEnabler::enable();
+         AutoLibraryLoader::enable();
       }
 };
 
 static loadFWLite lfw;
 #else
-#include "FWCore/FWLite/interface/FWLiteEnabler.h"
+#include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #endif
 
 void proof_thing_sel()
@@ -30,7 +30,7 @@ void proof_thing_sel()
   }
 
   //Setup the proof server
-  TProof *myProof=TProof::Open( "", "workers=2" );
+  TProof *myProof=TProof::Open( "" );
 
   // This makes sure the TSelector library and dictionary are properly
   // installed in the remote PROOF servers
@@ -41,7 +41,10 @@ void proof_thing_sel()
 
   // So inline it...
   myProof->Exec("gSystem->Load(\"libFWCoreFWLite\"); "
-               "FWLiteEnabler::enable(); "
+               "AutoLibraryLoader::enable(); "
+  // Have to load library manually since Proof does not use the 
+  // mechanism used by TFile to find class dictionaries and therefore
+  // the AutoLibraryLoader can not help
                "gSystem->Load(\"libFWCoreTFWLiteSelectorTest\");");
 
   // This creates the 'data set' which defines what files we need to process

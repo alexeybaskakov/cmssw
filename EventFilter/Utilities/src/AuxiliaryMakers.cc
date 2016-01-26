@@ -1,7 +1,6 @@
 #include <sys/time.h>
 
 #include "EventFilter/Utilities/interface/AuxiliaryMakers.h"
-#include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 namespace evf{
   namespace evtn{
@@ -24,14 +23,7 @@ namespace evf{
           time = stv.tv_sec;
           time = (time << 32) + stv.tv_usec;
         }
-	uint64_t orbitnr = (((uint64_t)record->getHeader().getData().header.orbitHigh) << 16) + record->getHeader().getData().header.orbitLow;
-        uint32_t recordLumiSection = record->getHeader().getData().header.lumiSection;
-
-        if (recordLumiSection != lumiSection) 
-          edm::LogWarning("AuxiliaryMakers") << "Lumisection mismatch, external : "<<lumiSection << ", record : " << recordLumiSection; 
-        if ((orbitnr >> 18) + 1 != recordLumiSection)
-          edm::LogWarning("AuxiliaryMakers") << "Lumisection and orbit number mismatch, LS : " << lumiSection << ", LS from orbit: " << ((orbitnr >> 18) + 1) << ", orbit:" << orbitnr;
-
+	int64_t orbitnr = (((uint64_t)record->getHeader().getData().header.orbitHigh) << 16) + record->getHeader().getData().header.orbitLow;
 	return edm::EventAuxiliary(eventId,
 				   processGUID,
 				   edm::Timestamp(time),

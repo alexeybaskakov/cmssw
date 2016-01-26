@@ -11,7 +11,6 @@
 #include "DataFormats/Common/interface/PtrVector.h"
 #include "DataFormats/Common/interface/FwdRef.h"
 #include "DataFormats/Common/interface/FwdPtr.h"
-#include "DataFormats/Common/interface/AtomicPtrCache.h"
 
 
 namespace DataFormats_CaloTowers {
@@ -41,6 +40,5 @@ namespace DataFormats_CaloTowers {
     std::vector<edm::Ptr<CaloTower> > vp1;
 
     std::vector<CaloTowerDetId> vctdi;
-    edm::AtomicPtrCache<std::vector<CaloTowerPtr> > easvrp;
   };
 }

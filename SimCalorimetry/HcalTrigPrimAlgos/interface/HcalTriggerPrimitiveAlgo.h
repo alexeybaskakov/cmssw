@@ -22,8 +22,7 @@ public:
   HcalTriggerPrimitiveAlgo(bool pf, const std::vector<double>& w, 
                            int latency,
                            uint32_t FG_threshold, uint32_t ZS_threshold,
-                           int numberOfSamples,   int numberOfPresamples,
-                           int numberOfSamplesHF, int numberOfPresamplesHF,
+                           int numberOfSamples, int numberOfPresamples,
                            uint32_t minSignalThreshold=0, uint32_t PMT_NoiseThreshold=0);
   ~HcalTriggerPrimitiveAlgo();
 
@@ -64,8 +63,6 @@ public:
   int ZS_threshold_I_;
   int numberOfSamples_;
   int numberOfPresamples_;
-  int numberOfSamplesHF_;
-  int numberOfPresamplesHF_;
   uint32_t minSignalThreshold_;
   uint32_t PMT_NoiseThreshold_; 
 

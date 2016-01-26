@@ -16,8 +16,7 @@ RawToDigi = cms.Sequence(csctfDigis
                          +muonDTDigis
                          +muonRPCDigis
                          +castorDigis
-                         +scalersRawToDigi
-                         +tcdsDigis)
+                         +scalersRawToDigi)
 
 RawToDigi_woGCT = cms.Sequence(csctfDigis
                                +dttfDigis
@@ -32,8 +31,7 @@ RawToDigi_woGCT = cms.Sequence(csctfDigis
                                +muonDTDigis
                                +muonRPCDigis
                                +castorDigis
-                               +scalersRawToDigi
-                               +tcdsDigis)
+                               +scalersRawToDigi)
 
 ecalDigis.DoRegional = False
 

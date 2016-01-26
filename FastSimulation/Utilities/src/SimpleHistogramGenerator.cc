@@ -6,14 +6,13 @@
 // #include <iostream>
 
 SimpleHistogramGenerator::SimpleHistogramGenerator(TH1 * histo) :
-  //myHisto(histo),
-  //theXaxis(histo->GetXaxis()),
-  nBins(histo->GetXaxis()->GetNbins()),
-  xMin(histo->GetXaxis()->GetXmin()),
-  xMax(histo->GetXaxis()->GetXmax()),
+  myHisto(histo),
+  theXaxis(histo->GetXaxis()),
+  nBins(theXaxis->GetNbins()),
+  xMin(theXaxis->GetXmin()),
+  xMax(theXaxis->GetXmax()),
   binWidth((xMax-xMin)/(float)nBins)
 {
-  integral.reserve(nBins+2);
   integral.push_back(0.);
   for ( int i=1; i<=nBins; ++i )
     integral.push_back(integral[i-1]+histo->GetBinContent(i));
@@ -42,7 +41,7 @@ SimpleHistogramGenerator::generate(RandomEngineAndDistribution const* random) co
 
 int 
 SimpleHistogramGenerator::binarySearch(const int& n, 
-				       const std::vector<float>& array, 
+				       const std::vector<double>& array, 
 				       const double& value) const
 {
    // Binary search in an array of n values to locate value.

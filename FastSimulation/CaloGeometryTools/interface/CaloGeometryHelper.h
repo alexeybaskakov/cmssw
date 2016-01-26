@@ -6,7 +6,6 @@
 #include "FastSimulation/CaloGeometryTools/interface/BaseCrystal.h"
 
 #include <vector>
-#include <array>
 
 class DetId;
 class Crystal;
@@ -46,8 +45,7 @@ class CaloGeometryHelper:public Calorimeter
   void initialize(double bField);  
 
   // get the <=8 neighbours
-  typedef std::array<DetId,8> NeiVect; 
-  const  NeiVect& getNeighbours(const DetId& det) const ;
+  const std::vector<DetId> & getNeighbours(const DetId& det) const ;
 
   inline double magneticField() const {return bfield_;}
   
@@ -69,8 +67,8 @@ class CaloGeometryHelper:public Calorimeter
   double psLayer1Z_,psLayer2Z_;
 
   // array of neighbours the hashed index is used for the first vector
-  std::vector< NeiVect >  barrelNeighbours_;
-  std::vector< NeiVect >  endcapNeighbours_;
+  std::vector<std::vector<DetId> > barrelNeighbours_;
+  std::vector<std::vector<DetId> > endcapNeighbours_;
 
   std::vector<BaseCrystal> barrelCrystals_;
   std::vector<BaseCrystal> endcapCrystals_;

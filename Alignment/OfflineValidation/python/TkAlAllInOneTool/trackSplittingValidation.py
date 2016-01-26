@@ -65,8 +65,8 @@ class TrackSplittingValidation(GenericValidationData):
         """
         repMap = self.getRepMap()
 
-        parameters = " ".join(os.path.join("root://eoscms//eos/cms", file.lstrip("/")) for file in repMap["resultFiles"])
+        parameters = " ".join(repMap["outputFiles"])
 
-        mergedoutputfile = os.path.join("root://eoscms//eos/cms", repMap["finalResultFile"].lstrip("/"))
+        mergedoutputfile = repMap["finalOutputFile"]
         validationsSoFar += "hadd %s %s\n" % (mergedoutputfile, parameters)
         return validationsSoFar

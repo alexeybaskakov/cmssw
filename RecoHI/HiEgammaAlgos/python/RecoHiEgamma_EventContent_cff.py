@@ -32,8 +32,6 @@ RecoHiEgammaAOD = cms.PSet(
     outputCommands = cms.untracked.vstring(
     'keep floatedmValueMap_*_*_*',
     'keep recoGsfElectrons_gedGsfElectronsTmp_*_*',
-    'keep recoSuperClusters_correctedIslandBarrelSuperClusters_*_*',
-    'keep recoSuperClusters_correctedIslandEndcapSuperClusters_*_*',
     'keep recoHIPhotonIsolationedmValueMap_photonIsolationHIProducer_*_*'
     )
     )
